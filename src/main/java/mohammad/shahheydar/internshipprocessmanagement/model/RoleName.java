@@ -1,9 +1,10 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
 public enum RoleName {
-    Faculty_training_staff,
-    Department_head,
-    University_training_staff,
-    Guide_teacher,
-    Supervisor,
+    FACULTY_TRAINING_STAFF,
+    DEPARTMENT_HEAD,
+    UNIVERSITY_TRAINING_STAFF,
+    GUIDE_TEACHER,
+    SUPERVISOR,
+    EDUCATION_DEPARTMENT_MASTER
 }

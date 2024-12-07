@@ -11,12 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//todo: builder not working on super
 @Entity
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+public class Role extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private RoleName name;
 

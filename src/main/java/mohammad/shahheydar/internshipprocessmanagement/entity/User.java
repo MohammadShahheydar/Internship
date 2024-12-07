@@ -10,11 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @MappedSuperclass
-public abstract class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+public abstract class User extends BaseEntity{
     @Column(nullable = false, length = 10)
     private String nationalId;
 
