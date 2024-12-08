@@ -6,9 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @MappedSuperclass
 public abstract class User extends BaseEntity{
     @Column(nullable = false, length = 10)
@@ -24,4 +22,12 @@ public abstract class User extends BaseEntity{
     private String password;
 
     private String phone;
+
+    public User(String nationalId, String name, String email, String password, String phone) {
+        this.nationalId = nationalId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+    }
 }

@@ -9,7 +9,6 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @MappedSuperclass
 public abstract class BaseEntity {
@@ -18,4 +17,8 @@ public abstract class BaseEntity {
     private long id;
 
 //    todo: add dates and soft delete
+
+
+    public BaseEntity() {
+    }
 }
