@@ -7,9 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-public class Request extends BaseEntity {
+public class InternshipRequest extends BaseEntity {
 //    todo: rename
     @ManyToOne()
     @JoinColumn(name = "student_id")

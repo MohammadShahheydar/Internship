@@ -5,20 +5,25 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-//    todo: add dates and soft delete
+    @LastModifiedDate
+    private Date updatedAt;
 
-
-    public BaseEntity() {
-    }
+    @CreatedDate
+    private Date createdAt;
+//    todo: soft delete
 }

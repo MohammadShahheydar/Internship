@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 //todo: builder not working on super
 //todo: read about wild generic
 @Entity
