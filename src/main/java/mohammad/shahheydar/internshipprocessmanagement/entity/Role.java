@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 //todo: builder not working on super
+//todo: read about wild generic
 @Entity
 public class Role extends BaseEntity{
     @Enumerated(EnumType.STRING)
