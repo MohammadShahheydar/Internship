@@ -1,6 +1,8 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Getter
@@ -14,4 +16,8 @@ public class Student extends User {
     private long facultyId;
     private long collageId;
     private long majorId;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "supervisor_id" , nullable = true)
+    private Employee supervisor;
 }

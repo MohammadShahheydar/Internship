@@ -25,5 +25,6 @@ public abstract class BaseEntity {
 
     @CreatedDate
     private Date createdAt;
-//    todo: soft delete
+
+    private Date deletedAt;
 }
