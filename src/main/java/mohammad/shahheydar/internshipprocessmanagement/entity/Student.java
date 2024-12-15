@@ -18,6 +18,6 @@ public class Student extends User {
     private long majorId;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "supervisor_id" , nullable = true)
+    @JoinColumn(name = "supervisor_id" )
     private Employee supervisor;
 }

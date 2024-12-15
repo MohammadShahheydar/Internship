@@ -24,17 +24,33 @@ public class InternshipRequest extends BaseEntity {
 
     private String agreementUploadUrl;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "faculty_training_staff_id")
     private Employee facultyTrainingStaff;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "university_training_staff_id")
     private Employee universityTrainingStaff;
 
-    @OneToOne
-    @JoinColumn(name = "State Department_head_id")
+    @ManyToOne
+    @JoinColumn(name = "state Department_head_id")
     private Employee stateDepartmentHead;
+
+    @ManyToOne
+    @JoinColumn(name = "department_head_id")
+    private Employee departmentHeadId;
+
+    @OneToOne
+    @JoinColumn(name = "university_training_staff_opinion_id")
+    private Opinion universityTrainingStaffOpinion;
+
+    @OneToOne
+    @JoinColumn(name = "guide_teature_opinion_id")
+    private Opinion guideTeatureOpinion;
+
+    @OneToOne
+    @JoinColumn(name = "department_head_opinion_id")
+    private Opinion departmentHeadOpinionId;
 
     private String state;
 }
