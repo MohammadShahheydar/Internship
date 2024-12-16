@@ -31,7 +31,7 @@ public class WeeklyReport extends BaseEntity {
 
     private Date reportDate;
 
-    @ManyToOne
-    @JoinColumn(name = "internship_id")
-    private Internship internship;
+//    @ManyToOne
+//    @JoinColumn(name = "internship_id")
+//    private Internship internship;
 }

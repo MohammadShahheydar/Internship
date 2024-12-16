@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +25,8 @@ public class Internship extends BaseEntity{
 
     private int internshipState;
 
+    //todo student
+
     @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
@@ -33,4 +36,8 @@ public class Internship extends BaseEntity{
     @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
     @JoinColumn(name = "guide_teacher_id")
     private Employee guideTeacher;
+
+    @OneToMany()
+    @JoinColumn()
+    List<WeeklyReport> weeklyReports;
 }

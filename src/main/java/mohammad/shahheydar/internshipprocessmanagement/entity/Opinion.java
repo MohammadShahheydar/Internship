@@ -26,9 +26,9 @@ public class Opinion extends BaseEntity {
 
     private Date commentDate;
 
-    @ManyToOne
-    @JoinColumn(name = "internship_request_id")
-    private InternshipRequest internshipRequest;
+//    @ManyToOne //todo
+//    @JoinColumn(name = "internship_request_id")
+//    private InternshipRequest internshipRequest;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

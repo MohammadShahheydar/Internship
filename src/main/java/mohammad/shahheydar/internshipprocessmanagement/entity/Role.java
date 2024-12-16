@@ -17,6 +17,6 @@ public class Role extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private RoleName name;
 
-    @ManyToMany(mappedBy = "roles")
-    List<Employee> employees;
+//    @ManyToMany(mappedBy = "roles")
+//    List<Employee> employees;
 }

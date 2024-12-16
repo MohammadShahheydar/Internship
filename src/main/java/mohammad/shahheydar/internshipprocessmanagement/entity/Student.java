@@ -13,9 +13,9 @@ import lombok.*;
 public class Student extends User {
 
 //    todo: create model (optional)
-    private long facultyId;
-    private long collageId;
-    private long majorId;
+//    private long facultyId;
+//    private long collageId;
+//    private long majorId;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "supervisor_id" )

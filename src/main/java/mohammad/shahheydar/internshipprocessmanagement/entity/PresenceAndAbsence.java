@@ -19,9 +19,9 @@ public class PresenceAndAbsence extends BaseEntity {
 
     private boolean supervisorConfirmation;
 
-    private Date start;
+    private Date start;//todo why here?
 
-    private Date end;
+    private Date end;//todo why here?
 
     @ManyToOne
     @JoinColumn(name = "internship_id")
