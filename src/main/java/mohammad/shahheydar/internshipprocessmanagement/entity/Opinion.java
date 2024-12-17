@@ -16,8 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 public class Opinion extends BaseEntity {
-//    todo : how to make all columns nullable = false ?????
-//    todo : how to make all relation optional = false ?????
     private Date seen;
 
     private Boolean confirm;

@@ -9,7 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class InternshipRequest extends BaseEntity {
-//    todo: rename
     @ManyToOne()
     @JoinColumn(name = "student_id")
     private Student student;

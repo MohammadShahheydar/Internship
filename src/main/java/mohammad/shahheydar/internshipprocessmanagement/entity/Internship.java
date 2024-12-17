@@ -25,7 +25,9 @@ public class Internship extends BaseEntity{
 
     private int internshipState;
 
-    //todo student
+    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
     @JoinColumn(name = "supervisor_id")
