@@ -6,7 +6,8 @@ public enum RoleName {
     UNIVERSITY_TRAINING_STAFF,
     GUIDE_TEACHER,
     SUPERVISOR,
-    EDUCATION_DEPARTMENT_MASTER
+    EDUCATION_DEPARTMENT_MASTER,
+    ADMIN
 
 //    todo: student , admin role
 }
