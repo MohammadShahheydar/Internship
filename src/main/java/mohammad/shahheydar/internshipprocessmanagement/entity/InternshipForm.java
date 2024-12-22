@@ -22,6 +22,13 @@ public class InternshipForm extends BaseEntity{
     @Column(nullable = false)
     private String city;
 
+    private String supervisorName;
+
+    private String supervisorPhone;
+
+    @Column(nullable = true)
+    private String supervisorWebUrl;
+
     @Column(nullable = false , length = 500)
     private String address;
 
@@ -33,4 +40,6 @@ public class InternshipForm extends BaseEntity{
 
     @Column(nullable = false , length = 4)
     private String term;
+
+    private short passedUnit;
 }

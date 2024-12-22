@@ -51,5 +51,9 @@ public class InternshipRequest extends BaseEntity {
     @JoinColumn(name = "department_head_opinion_id")
     private Opinion departmentHeadOpinionId;
 
+    @OneToOne
+    @JoinColumn(name = "internship_form_id")
+    private InternshipForm internshipForm;
+
     private String state;
 }

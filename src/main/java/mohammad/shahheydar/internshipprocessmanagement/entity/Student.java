@@ -20,4 +20,10 @@ public class Student extends User {
     @ManyToOne(optional = true)
     @JoinColumn(name = "supervisor_id" )
     private Employee supervisor;
+
+    private String field;
+
+    private String degree;
+
+    private String orientation;
 }
