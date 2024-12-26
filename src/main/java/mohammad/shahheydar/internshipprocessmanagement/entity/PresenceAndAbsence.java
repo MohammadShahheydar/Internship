@@ -17,13 +17,11 @@ import java.util.Date;
 @Entity
 public class PresenceAndAbsence extends BaseEntity {
 
-//    todo : hibernate has error on creation this entity
-
     private boolean supervisorConfirmation;
 
-    private Date start;//todo why here?
+    private Date startTime;//todo why here?
 
-    private Date end;//todo why here?
+    private Date endTime;//todo why here?
 
     @ManyToOne
     @JoinColumn(name = "internship_id")
