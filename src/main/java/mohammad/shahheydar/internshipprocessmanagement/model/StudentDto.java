@@ -1,16 +1,20 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.util.Objects;
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-public final class StudentDto extends UserDto {
+@NoArgsConstructor
+@Data
+public class StudentDto extends UserDto {
      EmployeeDto supervisor;
+     @NotNull
      String field;
+     @NotNull
      String degree;
+     @NotNull
      String orientation;
 }

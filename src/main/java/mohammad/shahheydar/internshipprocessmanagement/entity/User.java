@@ -8,11 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.List;
+import mohammad.shahheydar.internshipprocessmanagement.model.UserDetail;
 
 @Getter
 @Setter
@@ -20,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @MappedSuperclass
 //todo index
-public abstract class User extends BaseEntity implements UserDetails {
+public abstract class User extends BaseEntity implements UserDetail {
     @Column(nullable = false, length = 10)
     private String nationalId;
 
@@ -34,14 +30,9 @@ public abstract class User extends BaseEntity implements UserDetails {
     private String email;
 
     @Column(nullable = false)
-    private String password;//bycrypt
+    private String password;
 
-    private String phoneNumber;//todo list @conveter
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
+    private String phoneNumber;
 
     @Override
     public String getUsername() {
@@ -54,22 +45,22 @@ public abstract class User extends BaseEntity implements UserDetails {
     }
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return UserDetail.super.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return UserDetail.super.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return UserDetail.super.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return UserDetail.super.isEnabled();
     }
 
 }

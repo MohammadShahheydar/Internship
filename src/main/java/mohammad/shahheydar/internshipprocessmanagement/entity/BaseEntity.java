@@ -8,7 +8,8 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -21,10 +22,10 @@ public abstract class BaseEntity {
     private long id;
 
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @CreatedDate
-    private Date createdAt;
+    private LocalDate createdAt;
 
-    private Date deletedAt;
+    private LocalDate deletedAt;
 }

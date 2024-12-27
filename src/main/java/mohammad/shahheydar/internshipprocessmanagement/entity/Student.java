@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import mohammad.shahheydar.internshipprocessmanagement.model.GrantedAuthority;
+
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -26,4 +29,9 @@ public class Student extends User {
     private String degree;
 
     private String orientation;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 }
