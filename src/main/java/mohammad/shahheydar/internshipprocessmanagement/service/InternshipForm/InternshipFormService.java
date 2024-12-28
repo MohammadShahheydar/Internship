@@ -6,6 +6,7 @@ import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormList
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormListDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipFormRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,5 +32,12 @@ public class InternshipFormService {
 
     public Optional<InternshipFormDto> findById(long id) {
         return internshipFormRepository.findById(id).map(internshipMapper::toDto);
+    }
+
+    public InternshipFormDto save(InternshipFormDto internshipFormDto , Long studentId) {
+        StudentDto studentDto = new StudentDto();
+        studentDto.setId(studentId);
+        internshipFormDto.setStudent(studentDto);
+        return internshipMapper.toDto(internshipFormRepository.save(internshipMapper.toEntity(internshipFormDto)));
     }
 }

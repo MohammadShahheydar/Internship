@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class InternshipForm extends BaseEntity{
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "student_id")
     private Student student;
 
