@@ -5,8 +5,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -21,10 +21,10 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     private LocalDate updatedAt;
 
-    @CreatedDate
+    @CreationTimestamp
     private LocalDate createdAt;
 
     private LocalDate deletedAt;
