@@ -2,6 +2,7 @@ package mohammad.shahheydar.internshipprocessmanagement.service.role;
 
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
+import mohammad.shahheydar.internshipprocessmanagement.model.RoleName;
 import mohammad.shahheydar.internshipprocessmanagement.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,9 @@ public class RoleService {
 
     public List<Role> findAll() {
         return roleRepository.findAll();
+    }
+
+    public Role findByName(RoleName roleName) {
+        return roleRepository.getByName(roleName);
     }
 }
