@@ -26,7 +26,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> supervisorAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.SUPERVISOR.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.SUPERVISOR.name() ,  RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/supervisor/*");
         registrationBean.setOrder(2);
         return registrationBean;
