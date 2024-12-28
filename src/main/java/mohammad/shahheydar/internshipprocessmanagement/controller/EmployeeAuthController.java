@@ -47,8 +47,6 @@ public class EmployeeAuthController {
 
     @PostMapping("register")
     public ResponseEntity<String> register(@Valid @RequestBody EmployeeDto employeeDto) {
-        List<Role> roles = employeeDto.getRoles().stream().map(role -> roleCache.getRoleByName(role.getName().name())).toList();
-        employeeDto.setRoles(roles);
         employeeAuthService.register(employeeDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
     }
