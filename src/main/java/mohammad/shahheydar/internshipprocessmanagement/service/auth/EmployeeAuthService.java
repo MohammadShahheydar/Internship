@@ -1,12 +1,15 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.config.RoleCache;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.EmployeeMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +44,12 @@ public class EmployeeAuthService {
 
     public Optional<Employee> findByEmail(String email) {
         return employeeRepository.findByEmail(email);
+    }
+
+    public EmployeeDto getAuthenticatedEmployee(HttpServletRequest request) {
+        Employee employee = (Employee) request.getAttribute("employee");
+        EmployeeDto employeeDto = employeeMapper.toDto(employee);
+        employeeDto.setPassword(null);
+        return employeeDto;
     }
 }

@@ -1,5 +1,6 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.StudentMapper;
@@ -33,5 +34,12 @@ public class StudentAuthService {
 
     public Optional<Student> findByEmail(String email) {
         return studentRepository.findByEmail(email);
+    }
+
+    public StudentDto getAuthenticatedStudent(HttpServletRequest request) {
+        Student student = (Student) request.getAttribute("student");
+        StudentDto studentDto = studentMapper.toDto(student);
+        studentDto.setPassword(null);
+        return studentDto;
     }
 }

@@ -1,6 +1,7 @@
 package mohammad.shahheydar.internshipprocessmanagement.controller;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import mohammad.shahheydar.internshipprocessmanagement.service.auth.StudentAuthS
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,5 +44,11 @@ public class StudentAuthController {
     public ResponseEntity<String> register(@Valid StudentDto studentDto) {
         studentAuthService.register(studentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
+    }
+
+
+    @GetMapping("get")
+    public ResponseEntity<StudentDto> getStudent(HttpServletRequest request) {
+        return ResponseEntity.ok(studentAuthService.getAuthenticatedStudent(request));
     }
 }
