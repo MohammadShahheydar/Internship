@@ -9,9 +9,21 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class InternshipForm extends BaseEntity{
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH})
     @JoinColumn(name = "student_id")
     private Student student;
+
+    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH} , optional = true)
+    @JoinColumn("faculty_training_staff")
+    private Employee facultyTrainingStaff;
+
+    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH} , optional = true)
+    @JoinColumn("department_head")
+    private Employee departmentHead;
+
+    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH} , optional = true)
+    @JoinColumn("university_training_staff")
+    private Employee universityTrainingStaff;
 
     @Column(nullable = false , length = 13)
     private String phone;
