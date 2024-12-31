@@ -11,14 +11,12 @@ import mohammad.shahheydar.internshipprocessmanagement.service.auth.StudentAuthS
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("student")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class StudentAuthController {
 
     private final StudentAuthService studentAuthService;
@@ -27,7 +25,7 @@ public class StudentAuthController {
     private int jwtExpiration;
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String token = studentAuthService.authenticate(loginRequestDto);
 
         Cookie cookie = new Cookie("emp-token", token);
@@ -41,7 +39,7 @@ public class StudentAuthController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@Valid StudentDto studentDto) {
+    public ResponseEntity<String> register(@Valid @RequestBody StudentDto studentDto) {
         studentAuthService.register(studentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
     }
