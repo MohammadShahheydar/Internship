@@ -43,11 +43,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        Optional<Cookie> employeeToken = Arrays.stream(request.getCookies())
+        Optional<Cookie> employeeToken = Arrays.stream(request.getCookies() != null ? request.getCookies() : new Cookie[0])
                 .filter(cookie -> "emp-token".equals(cookie.getName()))
                 .findFirst();
 
-        Optional<Cookie> studentToken = Arrays.stream(request.getCookies())
+        Optional<Cookie> studentToken = Arrays.stream(request.getCookies() != null ? request.getCookies() : new Cookie[0])
                 .filter(cookie -> "stu-token".equals(cookie.getName()))
                 .findFirst();
 

@@ -27,8 +27,6 @@ public class EmployeeAuthService {
 
     public String authenticate(LoginRequestDto loginRequestDto) {
         Employee employee = employeeRepository.findByEmail(loginRequestDto.username()).orElseThrow(() -> new NoSuchElementException("wrong username or password"));
-        System.out.println(employee.getPassword());
-        System.out.println(JwtService.hashPassword(loginRequestDto.password()));
         if (JwtService.verifyPassword(loginRequestDto.password() ,employee.getPassword()))
             return jwtService.generateToken(employee);
         else
