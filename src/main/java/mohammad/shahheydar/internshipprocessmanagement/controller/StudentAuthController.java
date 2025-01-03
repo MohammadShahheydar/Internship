@@ -28,7 +28,7 @@ public class StudentAuthController {
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String token = studentAuthService.authenticate(loginRequestDto);
 
-        Cookie cookie = new Cookie("emp-token", token);
+        Cookie cookie = new Cookie("stu-token", token);
         cookie.isHttpOnly();
         cookie.setSecure(true);
         cookie.setPath("/");
@@ -41,7 +41,7 @@ public class StudentAuthController {
     @PostMapping("register")
     public ResponseEntity<String> register(@Valid @RequestBody StudentDto studentDto) {
         studentAuthService.register(studentDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
+        return ResponseEntity.status(HttpStatus.CREATED).body("student created");
     }
 
 
