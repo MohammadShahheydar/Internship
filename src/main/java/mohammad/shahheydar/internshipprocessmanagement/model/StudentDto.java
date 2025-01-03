@@ -15,6 +15,6 @@ public class StudentDto extends UserDto {
      String field;
      @NotNull
      String degree;
-     @NotNull
+
      String orientation;
 }
