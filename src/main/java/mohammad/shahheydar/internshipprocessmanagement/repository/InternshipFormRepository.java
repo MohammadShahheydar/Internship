@@ -2,6 +2,7 @@ package mohammad.shahheydar.internshipprocessmanagement.repository;
 
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipProgressState;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface InternshipFormRepository extends JpaRepository<InternshipForm ,
 
 //    jpa
      Page<InternshipForm> findAllByStudent(Student student , Pageable pageable);
+
+     Page<InternshipForm> findAllByProgressState(InternshipProgressState internshipProgressState , Pageable pageable);
 }

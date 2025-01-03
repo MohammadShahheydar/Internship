@@ -40,6 +40,6 @@ public class Opinion extends BaseEntity {
     @AnyKeyJavaClass(Long.class)
     @Column(name = "opinion_target_type")
     @JoinColumn(name = "opinion_target_id")
-    @Any
+    @Any(fetch = FetchType.LAZY)
     private OpinionTarget opinionTarget;
 }

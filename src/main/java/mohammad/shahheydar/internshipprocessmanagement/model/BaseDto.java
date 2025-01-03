@@ -1,5 +1,6 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,11 +16,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseDto {
+    @JsonIgnore
     private long id;
 
+    @JsonIgnore
     private LocalDate updatedAt;
 
+    @JsonIgnore
     private LocalDate createdAt;
 
+    @JsonIgnore
     private LocalDate deletedAt;
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto extends BaseDto{
+public class UserDto extends BaseDto {
 
     @NotNull
     @Size(min = 10 , max = 10)

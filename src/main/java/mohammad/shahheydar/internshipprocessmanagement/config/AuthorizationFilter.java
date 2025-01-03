@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Component
 public class AuthorizationFilter extends OncePerRequestFilter {
 
     private final List<String> allowedRole;
@@ -30,7 +29,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Employee employee = (Employee)request.getAttribute("employee");
-        Boolean t = employee != null && employee.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(allowedRole::contains);
         if (employee != null && employee.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(allowedRole::contains)) {
             filterChain.doFilter(request , response);
             return ;
