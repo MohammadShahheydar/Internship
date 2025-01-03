@@ -1,12 +1,14 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Any;
+import org.hibernate.annotations.AnyDiscriminator;
+import org.hibernate.annotations.AnyDiscriminatorValue;
+import org.hibernate.annotations.AnyKeyJavaClass;
 
 import java.util.Date;
 
@@ -24,15 +26,20 @@ public class Opinion extends BaseEntity {
 
     private Date commentDate;
 
-//    @ManyToOne //todo
-//    @JoinColumn(name = "internship_request_id")
-//    private InternshipRequest internshipRequest;
+    @AnyDiscriminator(value = DiscriminatorType.STRING)
+    @AnyDiscriminatorValue(discriminator = "student" , entity = Student.class)
+    @AnyDiscriminatorValue(discriminator = "employee" , entity = Employee.class)
+    @AnyKeyJavaClass(Long.class)
+    @Column(name = "user_type")
+    @JoinColumn(name = "user_id")
+    @Any
+    private Opinioner user;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @AnyDiscriminator(value = DiscriminatorType.STRING)
+    @AnyDiscriminatorValue(discriminator = "internshipForm" , entity = InternshipForm.class)
+    @AnyKeyJavaClass(Long.class)
+    @Column(name = "opinion_target_type")
+    @JoinColumn(name = "opinion_target_id")
+    @Any
+    private OpinionTarget opinionTarget;
 }

@@ -15,11 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Employee extends User {
+public class Employee extends User implements Opinioner {
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH} , fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "employee_roles", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     List<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Opinion> opinions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

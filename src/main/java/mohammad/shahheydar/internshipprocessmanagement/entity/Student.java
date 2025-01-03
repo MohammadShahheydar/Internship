@@ -13,7 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Student extends User {
+public class Student extends User implements Opinioner {
 
 //    todo: create model (optional)
 //    private long facultyId;

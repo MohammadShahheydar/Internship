@@ -1,7 +1,8 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipRequest;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormDto;
@@ -22,11 +23,18 @@ public class InternshipFormService {
     private final InternshipFormListMapper internshipFormListMapper;
     private final InternshipMapper internshipMapper;
 
+    public InternshipFormDto save(InternshipFormDto internshipFormDto, HttpServletRequest request) {
+        var studentDto = new StudentDto();
+        studentDto.setId(((Student) request.getAttribute("student")).getId());
+        internshipFormDto.setStudent(studentDto);
+        return internshipMapper.toDto(internshipFormRepository.save(internshipMapper.toEntity(internshipFormDto)));
+    }
+
     public Page<InternshipFormListDto> findAll(Pageable pageable) {
         return internshipFormRepository.findAll(pageable).map(internshipFormListMapper::toDto);
     }
 
-    public Page<InternshipFormListDto> findAllByStudentId(long id , Pageable pageable) {
+    public Page<InternshipFormListDto> findAllByStudentId(long id, Pageable pageable) {
         return internshipFormRepository.findAllByStudentId(id, pageable).map(internshipFormListMapper::toDto);
     }
 
@@ -34,7 +42,7 @@ public class InternshipFormService {
         return internshipFormRepository.findById(id).map(internshipMapper::toDto);
     }
 
-    public InternshipFormDto save(InternshipFormDto internshipFormDto , Long studentId) {
+    public InternshipFormDto save(InternshipFormDto internshipFormDto, Long studentId) {
         StudentDto studentDto = new StudentDto();
         studentDto.setId(studentId);
         internshipFormDto.setStudent(studentDto);
