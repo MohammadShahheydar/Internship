@@ -1,6 +1,7 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm;
 
 import lombok.RequiredArgsConstructor;
+import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormDto;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -43,5 +45,11 @@ public class InternshipFormService {
         studentDto.setId(studentId);
         internshipFormDto.setStudent(studentDto);
         return internshipMapper.toDto(internshipFormRepository.save(internshipMapper.toEntity(internshipFormDto)));
+    }
+
+    public InternshipForm updateInternshipFormProgressState(Long id , InternshipProgressState internshipProgressState) {
+        InternshipForm internshipForm = internshipFormRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        internshipForm.setProgressState(internshipProgressState);
+        return internshipFormRepository.save(internshipForm);
     }
 }

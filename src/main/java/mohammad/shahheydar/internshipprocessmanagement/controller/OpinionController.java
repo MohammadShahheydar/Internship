@@ -23,7 +23,7 @@ public class OpinionController {
     public OpinionDto universityTrainingStaffOpinionOnInternshipForms(@PathVariable Long id , @RequestBody OpinionDto opinionDto , HttpServletRequest request) {
 
         Employee employee = new Employee();
-//        todo: context holder
+//        todo: context holder (spring security ?!?!)
         employee.setId(((Employee) request.getAttribute("employee")).getId());
 
         InternshipForm internshipForm = new InternshipForm();

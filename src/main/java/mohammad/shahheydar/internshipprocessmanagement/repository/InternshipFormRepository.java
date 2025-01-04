@@ -20,4 +20,5 @@ public interface InternshipFormRepository extends JpaRepository<InternshipForm ,
      Page<InternshipForm> findAllByStudent(Student student , Pageable pageable);
 
      Page<InternshipForm> findAllByProgressState(InternshipProgressState internshipProgressState , Pageable pageable);
+
 }
