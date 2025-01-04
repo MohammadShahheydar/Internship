@@ -33,6 +33,7 @@ public class Opinion extends BaseEntity {
     @Column(name = "user_type")
     @JoinColumn(name = "user_id")
     @Any
+//    todo: change to 4 columns for each employee
     private Opinioner user;
 
     @AnyDiscriminator(value = DiscriminatorType.STRING)
@@ -41,5 +42,6 @@ public class Opinion extends BaseEntity {
     @Column(name = "opinion_target_type")
     @JoinColumn(name = "opinion_target_id")
     @Any(fetch = FetchType.LAZY)
+    //    todo: change to 2 columns for (internship form , weekly report , ....)
     private OpinionTarget opinionTarget;
 }

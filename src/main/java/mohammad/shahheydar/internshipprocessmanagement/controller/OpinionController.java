@@ -23,6 +23,7 @@ public class OpinionController {
     public OpinionDto universityTrainingStaffOpinionOnInternshipForms(@PathVariable Long id , @RequestBody OpinionDto opinionDto , HttpServletRequest request) {
 
         Employee employee = new Employee();
+//        todo: context holder
         employee.setId(((Employee) request.getAttribute("employee")).getId());
 
         InternshipForm internshipForm = new InternshipForm();

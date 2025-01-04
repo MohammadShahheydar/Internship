@@ -13,6 +13,6 @@ import java.util.Date;
 /**
  * DTO for {@link Opinion}
  */
-public record OpinionDto(Date seen, @NotNull Boolean confirm, @NotNull @NotEmpty @NotBlank String comment,
-                         Date commentDate, Opinioner user, OpinionTarget opinionTarget) implements Serializable {
+public record OpinionDto(Date seen, @NotBlank Boolean confirm, @NotBlank String comment,
+                         Date commentDate, Opinioner user, OpinionTarget opinionTarget) {
 }
