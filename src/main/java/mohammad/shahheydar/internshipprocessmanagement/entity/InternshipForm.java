@@ -2,7 +2,8 @@ package mohammad.shahheydar.internshipprocessmanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import mohammad.shahheydar.internshipprocessmanagement.model.InternshipProgressState;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormProgressState;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormState;
 
 import java.util.List;
 
@@ -16,15 +17,15 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH} , optional = true)
+    @OneToOne(optional = true , fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_training_staff_id")
     private Employee facultyTrainingStaff;
 
-    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH} , optional = true)
+    @OneToOne(optional = true , fetch = FetchType.LAZY)
     @JoinColumn(name = "department_head_id")
     private Employee departmentHead;
 
-    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE , CascadeType.DETACH} , optional = true)
+    @OneToOne(optional = true , fetch = FetchType.LAZY)
     @JoinColumn(name = "university_training_staff_id")
     private Employee universityTrainingStaff;
 
@@ -65,8 +66,12 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
      */
 //    todo: db default value
     @Enumerated(EnumType.ORDINAL)
-    private InternshipProgressState progressState;
+    private InternshipFormProgressState progressState;
 //    todo: set expire logic for internship form
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private InternshipFormState formState = InternshipFormState.IN_PROGRESS;
 
     @OneToMany(mappedBy = "opinionTarget" , fetch = FetchType.EAGER)
     private List<Opinion> opinions;

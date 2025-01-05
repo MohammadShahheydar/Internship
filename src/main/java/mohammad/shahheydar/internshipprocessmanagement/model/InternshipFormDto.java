@@ -34,4 +34,8 @@ public class InternshipFormDto {
     @NotNull
     @Min(value = 80)
     private short passedUnit;
+
+    private InternshipFormProgressState progressState;
+
+    private InternshipFormState formState;
 }

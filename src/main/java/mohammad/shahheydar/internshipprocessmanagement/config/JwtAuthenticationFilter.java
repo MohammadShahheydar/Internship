@@ -65,7 +65,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     request.setAttribute("employee" , employee);
                     filterChain.doFilter(request , response);
                 }
-            } else {
+            }
+
+            if (studentToken.isPresent()){
                 final String username = jwtService.extractUsername(studentToken.get().getValue());
                 Student student = studentAuthService.findByEmail(username).get();
 
@@ -74,6 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request , response);
                 }
             }
+
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }

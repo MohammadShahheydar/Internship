@@ -1,6 +1,7 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
@@ -20,8 +21,8 @@ public class Student extends User implements Opinioner {
 //    private long collageId;
 //    private long majorId;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "supervisor_id" )
+    @ManyToOne(optional = true , fetch = FetchType.LAZY)
+    @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
 
     private String field;

@@ -11,6 +11,7 @@ import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.EmployeeRepository;
+import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class EmployeeAuthService {
     }
 
     public EmployeeDto getAuthenticatedEmployee(HttpServletRequest request) {
-        Employee employee = (Employee) request.getAttribute("employee");
+        Employee employee = UserExtractor.getEmployee(request);
         EmployeeDto employeeDto = employeeMapper.toDto(employee);
         employeeDto.setPassword(null);
         return employeeDto;

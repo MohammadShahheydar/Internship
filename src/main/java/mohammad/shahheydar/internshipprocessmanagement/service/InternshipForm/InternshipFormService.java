@@ -5,10 +5,7 @@ import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
-import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormDto;
-import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormListDto;
-import mohammad.shahheydar.internshipprocessmanagement.model.InternshipProgressState;
-import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.*;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipFormRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +26,8 @@ public class InternshipFormService {
         return internshipFormRepository.findAll(pageable).map(internshipFormListMapper::toDto);
     }
 
-    public Page<InternshipFormListDto> findAllByProgressState(Pageable pageable, InternshipProgressState internshipProgressState) {
-        return internshipFormRepository.findAllByProgressState(InternshipProgressState.UNIVERSITY_TRAINING_STAFF, pageable).map(internshipFormListMapper::toDto);
+    public Page<InternshipFormListDto> findAllByProgressState(Pageable pageable, InternshipFormProgressState internshipFormProgressState) {
+        return internshipFormRepository.findAllByProgressStateAndFormState(internshipFormProgressState, InternshipFormState.IN_PROGRESS , pageable).map(internshipFormListMapper::toDto);
     }
 
     public Page<InternshipFormListDto> findAllByStudentId(long id, Pageable pageable) {
@@ -48,9 +45,9 @@ public class InternshipFormService {
         return internshipMapper.toDto(internshipFormRepository.save(internshipMapper.toEntity(internshipFormDto)));
     }
 
-    public InternshipForm updateInternshipFormProgressStateAndEmployeeState(Long id , InternshipProgressState internshipProgressState , Employee employee) {
+    public void updateInternshipFormProgressStateAndEmployeeState(Long id, Employee employee, InternshipFormProgressState internshipFormProgressState, InternshipFormState formState) {
         InternshipForm internshipForm = internshipFormRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        switch (internshipProgressState) {
+        switch (internshipFormProgressState) {
             case UNIVERSITY_TRAINING_STAFF:
                 internshipForm.setUniversityTrainingStaff(employee);
                 break;
@@ -61,7 +58,8 @@ public class InternshipFormService {
                 internshipForm.setFacultyTrainingStaff(employee);
                 break;
         }
-        internshipForm.setProgressState(internshipProgressState);
-        return internshipFormRepository.save(internshipForm);
+        internshipForm.setProgressState(internshipFormProgressState);
+        internshipForm.setFormState(formState);
+        internshipFormRepository.save(internshipForm);
     }
 }

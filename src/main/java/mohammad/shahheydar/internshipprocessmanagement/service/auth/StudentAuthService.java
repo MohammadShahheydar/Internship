@@ -7,6 +7,7 @@ import mohammad.shahheydar.internshipprocessmanagement.mapper.StudentMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.StudentRepository;
+import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -37,7 +38,7 @@ public class StudentAuthService {
     }
 
     public StudentDto getAuthenticatedStudent(HttpServletRequest request) {
-        Student student = (Student) request.getAttribute("student");
+        Student student = UserExtractor.getStudent(request);
         StudentDto studentDto = studentMapper.toDto(student);
         studentDto.setPassword(null);
         return studentDto;

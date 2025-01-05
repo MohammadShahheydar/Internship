@@ -5,19 +5,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mohammad.shahheydar.internshipprocessmanagement.config.RoleCache;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
 import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
-import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
 import mohammad.shahheydar.internshipprocessmanagement.service.auth.EmployeeAuthService;
-import mohammad.shahheydar.internshipprocessmanagement.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("employee")
@@ -25,7 +20,6 @@ import java.util.List;
 public class EmployeeAuthController {
 
     private final EmployeeAuthService employeeAuthService;
-    private final RoleCache roleCache;
 
     @Value("${security.jwt.expiration-time}")
     private int jwtExpiration;
