@@ -65,7 +65,7 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
      */
 //    todo: db default value
     @Enumerated(EnumType.ORDINAL)
-    private InternshipProgressState progressState = InternshipProgressState.UNIVERSITY_TRAINING_STAFF;
+    private InternshipProgressState progressState;
 //    todo: set expire logic for internship form
 
     @OneToMany(mappedBy = "opinionTarget" , fetch = FetchType.EAGER)

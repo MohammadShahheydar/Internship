@@ -1,6 +1,7 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm;
 
 import lombok.RequiredArgsConstructor;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
@@ -47,8 +48,19 @@ public class InternshipFormService {
         return internshipMapper.toDto(internshipFormRepository.save(internshipMapper.toEntity(internshipFormDto)));
     }
 
-    public InternshipForm updateInternshipFormProgressState(Long id , InternshipProgressState internshipProgressState) {
+    public InternshipForm updateInternshipFormProgressStateAndEmployeeState(Long id , InternshipProgressState internshipProgressState , Employee employee) {
         InternshipForm internshipForm = internshipFormRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        switch (internshipProgressState) {
+            case UNIVERSITY_TRAINING_STAFF:
+                internshipForm.setUniversityTrainingStaff(employee);
+                break;
+            case DEPARTMENT_HEAD:
+                internshipForm.setDepartmentHead(employee);
+                break;
+            case FACULTY_TRAINING_STAFF:
+                internshipForm.setFacultyTrainingStaff(employee);
+                break;
+        }
         internshipForm.setProgressState(internshipProgressState);
         return internshipFormRepository.save(internshipForm);
     }
