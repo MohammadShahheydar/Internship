@@ -6,6 +6,7 @@ import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Opinioner;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipProgressState;
 import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.service.Opinion.OpinionService;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,6 @@ public class OpinionController {
         InternshipForm internshipForm = new InternshipForm();
         internshipForm.setId(id);
 
-        return opinionService.save(opinionDto , employee , internshipForm);
+        return opinionService.universityTrainingStaffOpinionOnInternshipForms(opinionDto , employee , internshipForm , InternshipProgressState.UNIVERSITY_TRAINING_STAFF);
     }
 }
