@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("employee")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:9000")
 public class EmployeeAuthController {
 
     private final EmployeeAuthService employeeAuthService;

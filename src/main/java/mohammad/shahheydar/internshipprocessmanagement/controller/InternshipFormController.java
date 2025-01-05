@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:9000")
 public class InternshipFormController {
 
     private final InternshipFormService internshipFormService;
