@@ -29,7 +29,7 @@ public class InternshipProcessManagementApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins("http://localhost:3000") // Allow React origin
+                        .allowedOrigins("http://localhost:9000") // Allow React origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow specific HTTP methods
                         .allowCredentials(true) // Allow cookies or authentication headers
                         .allowedHeaders("*"); // Allow all headers
