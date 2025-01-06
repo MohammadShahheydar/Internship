@@ -9,7 +9,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class StudentDto extends UserDto {
+public class StudentDto extends UserDto implements OpinionerDto{
      EmployeeDto supervisor;
      @NotNull
      String field;

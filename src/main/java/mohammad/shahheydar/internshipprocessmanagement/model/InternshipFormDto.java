@@ -7,9 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Data
-public class InternshipFormDto {
+public class InternshipFormDto implements OpinionTargetDto {
     private StudentDto student;
     @NotNull
     private String phone;
@@ -38,4 +40,6 @@ public class InternshipFormDto {
     private InternshipFormProgressState progressState;
 
     private InternshipFormState formState;
+
+    private List<OpinionDto> opinions;
 }

@@ -10,6 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-public class EmployeeDto extends UserDto {
+public class EmployeeDto extends UserDto implements OpinionerDto{
     List<Role> roles;
 }
