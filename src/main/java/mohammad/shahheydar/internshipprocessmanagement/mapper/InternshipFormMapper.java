@@ -8,6 +8,6 @@ import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 // todo: bug: default value not set
-@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING , uses = {StudentMapper.class , EmployeeMapper.class})
+@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING , uses = {StudentMapper.class , EmployeeMapper.class , OpinionMapper.class})
 public interface InternshipFormMapper extends BaseMapper<InternshipForm , InternshipFormDto> {
 }

@@ -27,6 +27,6 @@ public final class OpinionDto {
     private @NotBlank Boolean confirm;
     private @NotBlank String comment;
     private Date commentDate;
-    private Opinioner user;
-    private OpinionTarget opinionTarget;
+    private OpinionerDto user;
+    private OpinionTargetDto opinionTarget;
 }
