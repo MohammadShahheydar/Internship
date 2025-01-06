@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
-import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
+import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.*;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipFormRepository;
 import org.springframework.data.domain.Page;
@@ -20,14 +20,14 @@ public class InternshipFormService {
 
     private final InternshipFormRepository internshipFormRepository;
     private final InternshipFormListMapper internshipFormListMapper;
-    private final InternshipMapper internshipMapper;
+    private final InternshipFormMapper internshipFormMapper;
 
     public Page<InternshipFormListDto> findAll(Pageable pageable) {
         return internshipFormRepository.findAll(pageable).map(internshipFormListMapper::toDto);
     }
 
     public Page<InternshipFormListDto> findAllByProgressState(Pageable pageable, InternshipFormProgressState internshipFormProgressState) {
-        return internshipFormRepository.findAllByProgressStateAndFormState(internshipFormProgressState, InternshipFormState.IN_PROGRESS , pageable).map(internshipFormListMapper::toDto);
+        return internshipFormRepository.findAllByProgressStateAndFormState(internshipFormProgressState, InternshipFormState.IN_PROGRESS, pageable).map(internshipFormListMapper::toDto);
     }
 
     public Page<InternshipFormListDto> findAllByStudentId(long id, Pageable pageable) {
@@ -35,14 +35,16 @@ public class InternshipFormService {
     }
 
     public Optional<InternshipFormDto> findById(long id) {
-        return internshipFormRepository.findById(id).map(internshipMapper::toDto);
+        return internshipFormRepository.findById(id).map(internshipFormMapper::toDto);
     }
 
     public InternshipFormDto save(InternshipFormDto internshipFormDto, Long studentId) {
         StudentDto studentDto = new StudentDto();
         studentDto.setId(studentId);
         internshipFormDto.setStudent(studentDto);
-        return internshipMapper.toDto(internshipFormRepository.save(internshipMapper.toEntity(internshipFormDto)));
+        InternshipForm entity = internshipFormMapper.toEntity(internshipFormDto);
+        entity.setFormState(InternshipFormState.IN_PROGRESS);
+        return internshipFormMapper.toDto(internshipFormRepository.save(entity));
     }
 
     public void updateInternshipFormProgressStateAndEmployeeState(Long id, Employee employee, InternshipFormProgressState internshipFormProgressState, InternshipFormState formState) {

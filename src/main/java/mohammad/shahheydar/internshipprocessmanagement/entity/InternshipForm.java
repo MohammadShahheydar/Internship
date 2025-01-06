@@ -71,7 +71,7 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
 
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private InternshipFormState formState = InternshipFormState.IN_PROGRESS;
+    private InternshipFormState formState;
 
     @OneToMany(mappedBy = "opinionTarget" , fetch = FetchType.EAGER)
     private List<Opinion> opinions;
