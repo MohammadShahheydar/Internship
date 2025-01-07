@@ -1,9 +1,5 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
-import lombok.*;
-
-import java.util.Objects;
-
 public record InternshipFormListDto(
         Long id,
         String state,

@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Seeder implements CommandLineRunner {
 
-        private final RoleService roleService;
+    private final RoleService roleService;
 
     @Override
     public void run(String... args) throws Exception {

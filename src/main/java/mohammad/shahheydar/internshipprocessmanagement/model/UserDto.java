@@ -1,6 +1,5 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserDto extends BaseDto {
 
     @NotNull
-    @Size(min = 10 , max = 10)
+    @Size(min = 10, max = 10)
     String nationalId;
 
     @NotNull

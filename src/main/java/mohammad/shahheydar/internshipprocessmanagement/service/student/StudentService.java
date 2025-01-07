@@ -13,7 +13,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    public Optional<Student> findById (long id) {
+    public Optional<Student> findById(long id) {
         return studentRepository.findById(id);
     }
 }

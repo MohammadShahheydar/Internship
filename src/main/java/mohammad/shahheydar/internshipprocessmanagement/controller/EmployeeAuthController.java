@@ -11,7 +11,6 @@ import mohammad.shahheydar.internshipprocessmanagement.service.auth.EmployeeAuth
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

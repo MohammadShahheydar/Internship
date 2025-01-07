@@ -3,7 +3,6 @@ package mohammad.shahheydar.internshipprocessmanagement.model;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 

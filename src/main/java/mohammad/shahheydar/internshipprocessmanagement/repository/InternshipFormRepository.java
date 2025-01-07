@@ -11,15 +11,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InternshipFormRepository extends JpaRepository<InternshipForm , Long> {
+public interface InternshipFormRepository extends JpaRepository<InternshipForm, Long> {
 
-//    jpql
+    //    jpql
     @Query(value = "select ir from InternshipForm ir where ir.student.id = :studentId")
-     Page<InternshipForm> findAllByStudentId(long studentId , Pageable pageable);
+    Page<InternshipForm> findAllByStudentId(long studentId, Pageable pageable);
 
-//    jpa
-     Page<InternshipForm> findAllByStudent(Student student , Pageable pageable);
+    //    jpa
+    Page<InternshipForm> findAllByStudent(Student student, Pageable pageable);
 
-     Page<InternshipForm> findAllByProgressStateAndFormState(InternshipFormProgressState internshipFormProgressState, InternshipFormState formState, Pageable pageable);
+    Page<InternshipForm> findAllByProgressStateAndFormState(InternshipFormProgressState internshipFormProgressState, InternshipFormState formState, Pageable pageable);
 
 }

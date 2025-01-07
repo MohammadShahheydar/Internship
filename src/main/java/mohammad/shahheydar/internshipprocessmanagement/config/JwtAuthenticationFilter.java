@@ -11,7 +11,6 @@ import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.service.auth.EmployeeAuthService;
 import mohammad.shahheydar.internshipprocessmanagement.service.auth.JwtService;
 import mohammad.shahheydar.internshipprocessmanagement.service.auth.StudentAuthService;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -34,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return path.equals("/student/login") || path.equals("/student/register") || path.equals("/employee/login") || path.equals("/employee/register") ;
+        return path.equals("/student/login") || path.equals("/student/register") || path.equals("/employee/login") || path.equals("/employee/register");
     }
 
     @Override
@@ -53,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (studentToken.isEmpty() && employeeToken.isEmpty()) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            return ;
+            return;
         }
 
         try {
@@ -61,19 +60,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 final String username = jwtService.extractUsername(employeeToken.get().getValue());
                 Employee employee = employeeAuthService.findByEmail(username).get();
 
-                if (jwtService.isTokenValid(employeeToken.get().getValue() , employee)) {
-                    request.setAttribute("employee" , employee);
-                    filterChain.doFilter(request , response);
+                if (jwtService.isTokenValid(employeeToken.get().getValue(), employee)) {
+                    request.setAttribute("employee", employee);
+                    filterChain.doFilter(request, response);
                 }
             }
 
-            if (studentToken.isPresent()){
+            if (studentToken.isPresent()) {
                 final String username = jwtService.extractUsername(studentToken.get().getValue());
                 Student student = studentAuthService.findByEmail(username).get();
 
-                if (jwtService.isTokenValid(studentToken.get().getValue() , student)) {
-                    request.setAttribute("student" , student);
-                    filterChain.doFilter(request , response);
+                if (jwtService.isTokenValid(studentToken.get().getValue(), student)) {
+                    request.setAttribute("student", student);
+                    filterChain.doFilter(request, response);
                 }
             }
 

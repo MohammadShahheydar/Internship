@@ -10,7 +10,10 @@ import mohammad.shahheydar.internshipprocessmanagement.service.Opinion.OpinionSe
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,10 +21,10 @@ public class OpinionController {
 
     private final OpinionService opinionService;
 
-//    todo: update internship form progress state
+    //    todo: update internship form progress state
 //    todo: make update operation and save opinion transactional
     @PostMapping("universityTrainingStaff/opinion/internship-forms/{id}")
-    public ResponseEntity<String> universityTrainingStaffOpinionOnInternshipForms(@PathVariable Long id , @RequestBody OpinionDto opinionDto , HttpServletRequest request) {
+    public ResponseEntity<String> universityTrainingStaffOpinionOnInternshipForms(@PathVariable Long id, @RequestBody OpinionDto opinionDto, HttpServletRequest request) {
 
         Employee employee = new Employee();
         employee.setId(UserExtractor.getEmployee(request).getId());
@@ -29,13 +32,13 @@ public class OpinionController {
         InternshipForm internshipForm = new InternshipForm();
         internshipForm.setId(id);
 
-        opinionService.employeeOpinionOnInternshipForms(opinionDto , employee , internshipForm , InternshipFormProgressState.UNIVERSITY_TRAINING_STAFF);
+        opinionService.employeeOpinionOnInternshipForms(opinionDto, employee, internshipForm, InternshipFormProgressState.UNIVERSITY_TRAINING_STAFF);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 
     @PostMapping("departmentHead/opinion/internship-forms/{id}")
-    public ResponseEntity<String> departmentHeadOpinionOnInternshipForms(@PathVariable Long id , @RequestBody OpinionDto opinionDto , HttpServletRequest request) {
+    public ResponseEntity<String> departmentHeadOpinionOnInternshipForms(@PathVariable Long id, @RequestBody OpinionDto opinionDto, HttpServletRequest request) {
 
         Employee employee = new Employee();
         employee.setId(UserExtractor.getEmployee(request).getId());
@@ -43,13 +46,13 @@ public class OpinionController {
         InternshipForm internshipForm = new InternshipForm();
         internshipForm.setId(id);
 
-        opinionService.employeeOpinionOnInternshipForms(opinionDto , employee , internshipForm , InternshipFormProgressState.DEPARTMENT_HEAD);
+        opinionService.employeeOpinionOnInternshipForms(opinionDto, employee, internshipForm, InternshipFormProgressState.DEPARTMENT_HEAD);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 
     @PostMapping("facultyTrainingStaff/opinion/internship-forms/{id}")
-    public ResponseEntity<String> facultyTrainingStaffOpinionOnInternshipForms(@PathVariable Long id , @RequestBody OpinionDto opinionDto , HttpServletRequest request) {
+    public ResponseEntity<String> facultyTrainingStaffOpinionOnInternshipForms(@PathVariable Long id, @RequestBody OpinionDto opinionDto, HttpServletRequest request) {
 
         Employee employee = new Employee();
         employee.setId(UserExtractor.getEmployee(request).getId());
@@ -57,7 +60,7 @@ public class OpinionController {
         InternshipForm internshipForm = new InternshipForm();
         internshipForm.setId(id);
 
-        opinionService.employeeOpinionOnInternshipForms(opinionDto , employee , internshipForm , InternshipFormProgressState.FACULTY_TRAINING_STAFF);
+        opinionService.employeeOpinionOnInternshipForms(opinionDto, employee, internshipForm, InternshipFormProgressState.FACULTY_TRAINING_STAFF);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }

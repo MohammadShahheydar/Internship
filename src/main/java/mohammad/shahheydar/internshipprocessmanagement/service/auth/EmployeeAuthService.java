@@ -5,11 +5,9 @@ import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.config.RoleCache;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.EmployeeMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
-import mohammad.shahheydar.internshipprocessmanagement.model.StudentDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.EmployeeRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,7 @@ public class EmployeeAuthService {
 
     public String authenticate(LoginRequestDto loginRequestDto) {
         Employee employee = employeeRepository.findByEmail(loginRequestDto.username()).orElseThrow(() -> new NoSuchElementException("wrong username or password"));
-        if (JwtService.verifyPassword(loginRequestDto.password() ,employee.getPassword()))
+        if (JwtService.verifyPassword(loginRequestDto.password(), employee.getPassword()))
             return jwtService.generateToken(employee);
         else
             throw new NoSuchElementException("wrong username or password");

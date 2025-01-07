@@ -8,8 +8,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class EmployeeDto extends UserDto implements OpinionerDto{
+public class EmployeeDto extends UserDto implements OpinionerDto {
     List<Role> roles;
 }

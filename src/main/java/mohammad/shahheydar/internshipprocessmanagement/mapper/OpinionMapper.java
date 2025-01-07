@@ -30,11 +30,9 @@ public class OpinionMapper {
         opinionDto.confirm(opinion.getConfirm());
         opinionDto.comment(opinion.getComment());
         opinionDto.commentDate(opinion.getCommentDate());
-        opinion.getUser();
         if (opinion.getUser() instanceof Student)
             opinionDto.user(studentMapper.toDto((Student) opinion.getUser()));
         if (opinion.getUser() instanceof Employee)
-//            todo: doesn't map userDto fields
             opinionDto.user(employeeMapper.toDto((Employee) opinion.getUser()));
 
         return opinionDto.build();

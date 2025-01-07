@@ -7,5 +7,5 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface InternshipFormListMapper extends BaseMapper<InternshipForm , InternshipFormListDto>{
+public interface InternshipFormListMapper extends BaseMapper<InternshipForm, InternshipFormListDto> {
 }

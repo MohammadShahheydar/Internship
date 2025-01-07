@@ -29,22 +29,22 @@ public class InternshipFormController {
 
     @GetMapping("student/internship-forms")
     public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(HttpServletRequest request) {
-        return ResponseEntity.ok(internshipFormService.findAllByStudentId(UserExtractor.getStudent(request).getId() , Pageable.ofSize(20)));
+        return ResponseEntity.ok(internshipFormService.findAllByStudentId(UserExtractor.getStudent(request).getId(), Pageable.ofSize(20)));
     }
 
     @GetMapping("universityTrainingStaff/internship-forms")
     public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm() {
-        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20) , null));
+        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20), null));
     }
 
     @GetMapping("departmentHead/internship-forms")
     public ResponseEntity<Page<InternshipFormListDto>> getAllDepartmentHeadForm() {
-        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20) , InternshipFormProgressState.UNIVERSITY_TRAINING_STAFF));
+        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20), InternshipFormProgressState.UNIVERSITY_TRAINING_STAFF));
     }
 
     @GetMapping("facultyTrainingStaff/internship-forms")
     public ResponseEntity<Page<InternshipFormListDto>> getAllFacultyTrainingStaffForm() {
-        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20) , InternshipFormProgressState.DEPARTMENT_HEAD));
+        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20), InternshipFormProgressState.DEPARTMENT_HEAD));
     }
 
     @GetMapping("internship-forms/{id}")
@@ -55,8 +55,8 @@ public class InternshipFormController {
 
 
     @PostMapping("student/internship-forms/save")
-    public ResponseEntity<Void> save(@Valid @RequestBody InternshipFormDto internshipFormDto , HttpServletRequest request) {
-        internshipFormService.save(internshipFormDto , UserExtractor.getStudent(request).getId());
+    public ResponseEntity<Void> save(@Valid @RequestBody InternshipFormDto internshipFormDto, HttpServletRequest request) {
+        internshipFormService.save(internshipFormDto, UserExtractor.getStudent(request).getId());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

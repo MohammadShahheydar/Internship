@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValueCheckStrategy;
 
-@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING , uses = {EmployeeMapper.class})
+@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING, uses = {EmployeeMapper.class})
 public interface StudentMapper extends BaseMapper<Student, StudentDto> {
 }

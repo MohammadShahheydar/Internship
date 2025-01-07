@@ -1,18 +1,11 @@
 package mohammad.shahheydar.internshipprocessmanagement;
 
 import lombok.RequiredArgsConstructor;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
-import mohammad.shahheydar.internshipprocessmanagement.model.RoleName;
-import mohammad.shahheydar.internshipprocessmanagement.service.role.RoleService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor

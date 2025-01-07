@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Internship extends BaseEntity{
+public class Internship extends BaseEntity {
 
     private String studentFinalReport;
 
@@ -25,17 +25,17 @@ public class Internship extends BaseEntity{
 
     private int internshipState;
 
-    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
 
     private String supervisorReport;
 
-    @OneToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "guide_teacher_id")
     private Employee guideTeacher;
 

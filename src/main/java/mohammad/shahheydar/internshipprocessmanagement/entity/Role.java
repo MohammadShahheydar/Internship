@@ -1,11 +1,14 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import mohammad.shahheydar.internshipprocessmanagement.model.RoleName;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mohammad.shahheydar.internshipprocessmanagement.model.GrantedAuthority;
-
-import java.util.List;
+import mohammad.shahheydar.internshipprocessmanagement.model.RoleName;
 
 @Getter
 @Setter

@@ -26,7 +26,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> supervisorAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.SUPERVISOR.name() ,  RoleName.ADMIN.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.SUPERVISOR.name(), RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/supervisor/*");
         registrationBean.setOrder(2);
         return registrationBean;
@@ -35,7 +35,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> guideTeacherAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.GUIDE_TEACHER.name() , RoleName.ADMIN.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.GUIDE_TEACHER.name(), RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/guideTeacher/*");
         registrationBean.setOrder(2);
         return registrationBean;
@@ -44,7 +44,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> educationDepartmentMasterAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.EDUCATION_DEPARTMENT_MASTER.name() , RoleName.ADMIN.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.EDUCATION_DEPARTMENT_MASTER.name(), RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/educationDepartmentMaster/*");
         registrationBean.setOrder(2);
         return registrationBean;
@@ -53,7 +53,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> universityTrainingStaffAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.UNIVERSITY_TRAINING_STAFF.name() , RoleName.ADMIN.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.UNIVERSITY_TRAINING_STAFF.name(), RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/universityTrainingStaff/*");
         registrationBean.setOrder(2);
         return registrationBean;
@@ -62,7 +62,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> departmentHeadAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.DEPARTMENT_HEAD.name() , RoleName.ADMIN.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.DEPARTMENT_HEAD.name(), RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/departmentHead/*");
         registrationBean.setOrder(2);
         return registrationBean;
@@ -71,11 +71,12 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> facultyTrainingStaffAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.FACULTY_TRAINING_STAFF.name() , RoleName.ADMIN.name())));
+        registrationBean.setFilter(new AuthorizationFilter(List.of(RoleName.FACULTY_TRAINING_STAFF.name(), RoleName.ADMIN.name())));
         registrationBean.addUrlPatterns("/facultyTrainingStaff/*");
         registrationBean.setOrder(2);
         return registrationBean;
     }
+
     @Bean
     public FilterRegistrationBean<AuthorizationFilter> adminAuthorize() {
         FilterRegistrationBean<AuthorizationFilter> registrationBean = new FilterRegistrationBean<>();

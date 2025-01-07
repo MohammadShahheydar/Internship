@@ -2,7 +2,6 @@ package mohammad.shahheydar.internshipprocessmanagement.entity;
 
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +42,7 @@ public abstract class User extends BaseEntity implements UserDetail {
     public String getPassword() {
         return password;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return UserDetail.super.isAccountNonExpired();

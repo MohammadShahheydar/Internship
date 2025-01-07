@@ -27,8 +27,8 @@ public class Opinion extends BaseEntity {
     private Date commentDate;
 
     @AnyDiscriminator(value = DiscriminatorType.STRING)
-    @AnyDiscriminatorValue(discriminator = "student" , entity = Student.class)
-    @AnyDiscriminatorValue(discriminator = "employee" , entity = Employee.class)
+    @AnyDiscriminatorValue(discriminator = "student", entity = Student.class)
+    @AnyDiscriminatorValue(discriminator = "employee", entity = Employee.class)
     @AnyKeyJavaClass(Long.class)
     @Column(name = "user_type")
     @JoinColumn(name = "user_id")
@@ -37,7 +37,7 @@ public class Opinion extends BaseEntity {
     private Opinioner user;
 
     @AnyDiscriminator(value = DiscriminatorType.STRING)
-    @AnyDiscriminatorValue(discriminator = "internshipForm" , entity = InternshipForm.class)
+    @AnyDiscriminatorValue(discriminator = "internshipForm", entity = InternshipForm.class)
     @AnyKeyJavaClass(Long.class)
     @Column(name = "opinion_target_type")
     @JoinColumn(name = "opinion_target_id")

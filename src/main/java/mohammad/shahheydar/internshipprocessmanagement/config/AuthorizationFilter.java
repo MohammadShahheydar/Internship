@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.model.GrantedAuthority;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -24,15 +22,15 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        return path.startsWith("/student/") || path.equals("/student/login") || path.equals("/student/register") || path.equals("/employee/login") || path.equals("/employee/register") ;
+        return path.startsWith("/student/") || path.equals("/student/login") || path.equals("/student/register") || path.equals("/employee/login") || path.equals("/employee/register");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         Employee employee = UserExtractor.getEmployee(request);
         if (employee != null && employee.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(allowedRole::contains)) {
-            filterChain.doFilter(request , response);
-            return ;
+            filterChain.doFilter(request, response);
+            return;
         }
 
         response.setStatus(HttpStatus.FORBIDDEN.value());

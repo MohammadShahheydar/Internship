@@ -4,7 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mohammad.shahheydar.internshipprocessmanagement.model.GrantedAuthority;
 
 import java.util.Collection;
@@ -21,7 +24,7 @@ public class Student extends User implements Opinioner {
 //    private long collageId;
 //    private long majorId;
 
-    @ManyToOne(optional = true , fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
 
