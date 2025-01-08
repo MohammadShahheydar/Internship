@@ -60,22 +60,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 final String username = jwtService.extractUsername(employeeToken.get().getValue());
                 Employee employee = employeeAuthService.findByEmail(username).get();
 
-                if (jwtService.isTokenValid(employeeToken.get().getValue(), employee)) {
+                if (jwtService.isTokenValid(employeeToken.get().getValue(), employee))
                     request.setAttribute("employee", employee);
-                    filterChain.doFilter(request, response);
-                }
+
             }
 
             if (studentToken.isPresent()) {
                 final String username = jwtService.extractUsername(studentToken.get().getValue());
                 Student student = studentAuthService.findByEmail(username).get();
 
-                if (jwtService.isTokenValid(studentToken.get().getValue(), student)) {
+                if (jwtService.isTokenValid(studentToken.get().getValue(), student))
                     request.setAttribute("student", student);
-                    filterChain.doFilter(request, response);
-                }
-            }
 
+            }
+            filterChain.doFilter(request, response);
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
