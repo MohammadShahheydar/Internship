@@ -20,15 +20,15 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_training_staff_id")
     private Employee facultyTrainingStaff;
 
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_head_id")
     private Employee departmentHead;
 
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "university_training_staff_id")
     private Employee universityTrainingStaff;
 
