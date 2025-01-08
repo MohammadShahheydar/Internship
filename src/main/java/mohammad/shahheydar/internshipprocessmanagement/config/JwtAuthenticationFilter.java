@@ -62,7 +62,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 if (jwtService.isTokenValid(employeeToken.get().getValue(), employee))
                     request.setAttribute("employee", employee);
-
             }
 
             if (studentToken.isPresent()) {
@@ -71,7 +70,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 if (jwtService.isTokenValid(studentToken.get().getValue(), student))
                     request.setAttribute("student", student);
-
             }
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
