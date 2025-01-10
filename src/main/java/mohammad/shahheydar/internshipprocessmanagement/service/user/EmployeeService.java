@@ -1,4 +1,4 @@
-package mohammad.shahheydar.internshipprocessmanagement.service.auth;
+package mohammad.shahheydar.internshipprocessmanagement.service.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +8,7 @@ import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.EmployeeMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.RoleName;
 import mohammad.shahheydar.internshipprocessmanagement.repository.EmployeeRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class EmployeeAuthService {
+public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final RoleCache roleCache;
     private final EmployeeMapper employeeMapper;
@@ -48,5 +49,16 @@ public class EmployeeAuthService {
         EmployeeDto employeeDto = employeeMapper.toDto(employee);
         employeeDto.setPassword(null);
         return employeeDto;
+    }
+
+    public List<EmployeeDto> getAllGuideTeachers(String name) {
+        if (name == null)
+            return employeeRepository.findAllByRole(RoleName.GUIDE_TEACHER).stream().map(employeeMapper::toDto).toList();
+        else
+            return employeeRepository.findAllByRoleAndName(RoleName.GUIDE_TEACHER.name(), name).stream().map(employeeMapper::toDto).toList();
+    }
+
+    public Optional<Employee> findGuideTeacherById(Long id) {
+        return employeeRepository.findGuideTeacherById(id);
     }
 }

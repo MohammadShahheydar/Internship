@@ -1,18 +1,18 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.Opinion;
 
 import lombok.RequiredArgsConstructor;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Opinion;
-import mohammad.shahheydar.internshipprocessmanagement.entity.OpinionTarget;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Opinioner;
+import mohammad.shahheydar.internshipprocessmanagement.entity.*;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.OpinionMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormProgressState;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipFormState;
 import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.OpinionRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm.InternshipFormService;
+import mohammad.shahheydar.internshipprocessmanagement.service.user.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 
@@ -23,13 +23,19 @@ public class OpinionService {
     private final OpinionRepository opinionRepository;
     private final OpinionMapper opinionMapper;
     private final InternshipFormService internshipFormService;
+    private final EmployeeService employeeService;
+
+//    todo: 2 @Transactional . ok ? is it work ?
+    @Transactional
+    public void employeeOpinionOnInternshipForms(OpinionDto opinionDto, Employee opinioner, InternshipForm opinionTarget, InternshipFormProgressState internshipFormProgressState , Long guideTeacherId) {
+        opinionTarget.setGuideTeacher(employeeService.findGuideTeacherById(guideTeacherId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND , "guide teacher not found ")));
+        employeeOpinionOnInternshipForms(opinionDto , opinioner , opinionTarget , internshipFormProgressState);
+    }
 
     @Transactional
-    public void employeeOpinionOnInternshipForms(OpinionDto opinionDto, Opinioner opinioner, OpinionTarget opinionTarget, InternshipFormProgressState internshipFormProgressState) {
-//        todo: check FACULTY_TRAINING_STAFF is the last one in process
+    public void employeeOpinionOnInternshipForms(OpinionDto opinionDto, Employee opinioner, InternshipForm opinionTarget, InternshipFormProgressState internshipFormProgressState) {
         InternshipFormState formState = opinionDto.getConfirm() ? internshipFormProgressState == InternshipFormProgressState.FACULTY_TRAINING_STAFF ? InternshipFormState.CONFIRM : InternshipFormState.IN_PROGRESS : InternshipFormState.FAIL;
-        Employee employee = (Employee) opinioner;
-        internshipFormService.updateInternshipFormProgressStateAndEmployeeState(opinionTarget.getId(), employee, internshipFormProgressState, formState);
+        internshipFormService.updateInternshipFormProgressStateAndEmployeeState(opinionTarget, opinioner, internshipFormProgressState, formState);
         Opinion opinion = opinionMapper.toEntity(opinionDto);
         opinion.setUser(opinioner);
         opinion.setOpinionTarget(opinionTarget);

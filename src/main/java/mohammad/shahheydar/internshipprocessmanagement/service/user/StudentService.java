@@ -1,4 +1,4 @@
-package mohammad.shahheydar.internshipprocessmanagement.service.auth;
+package mohammad.shahheydar.internshipprocessmanagement.service.user;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class StudentAuthService {
+public class StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final JwtService jwtService;
@@ -42,5 +42,9 @@ public class StudentAuthService {
         StudentDto studentDto = studentMapper.toDto(student);
         studentDto.setPassword(null);
         return studentDto;
+    }
+
+    public Optional<Student> findById(long id) {
+        return studentRepository.findById(id);
     }
 }

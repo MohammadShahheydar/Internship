@@ -1,4 +1,4 @@
-package mohammad.shahheydar.internshipprocessmanagement.service.auth;
+package mohammad.shahheydar.internshipprocessmanagement.service.user;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

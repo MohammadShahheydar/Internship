@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseDto {
-    @JsonIgnore
     private long id;
 
     @JsonIgnore

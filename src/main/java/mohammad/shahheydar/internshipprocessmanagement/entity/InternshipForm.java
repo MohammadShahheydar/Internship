@@ -32,6 +32,10 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
     @JoinColumn(name = "university_training_staff_id")
     private Employee universityTrainingStaff;
 
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "guide_teacher_id")
+    private Employee guideTeacher;
+
     @Column(nullable = false, length = 13)
     private String phone;
 

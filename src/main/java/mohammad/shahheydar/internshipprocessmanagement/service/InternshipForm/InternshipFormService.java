@@ -38,6 +38,10 @@ public class InternshipFormService {
         return internshipFormRepository.findById(id).map(internshipFormMapper::toDto);
     }
 
+    public Optional<InternshipForm> findOriginalById(long id) {
+        return internshipFormRepository.findById(id);
+    }
+
     public InternshipFormDto save(InternshipFormDto internshipFormDto, Long studentId) {
         StudentDto studentDto = new StudentDto();
         studentDto.setId(studentId);
@@ -47,8 +51,7 @@ public class InternshipFormService {
         return internshipFormMapper.toDto(internshipFormRepository.save(entity));
     }
 
-    public void updateInternshipFormProgressStateAndEmployeeState(Long id, Employee employee, InternshipFormProgressState internshipFormProgressState, InternshipFormState formState) {
-        InternshipForm internshipForm = internshipFormRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public void updateInternshipFormProgressStateAndEmployeeState(InternshipForm internshipForm, Employee employee, InternshipFormProgressState internshipFormProgressState, InternshipFormState formState) {
         switch (internshipFormProgressState) {
             case UNIVERSITY_TRAINING_STAFF:
                 internshipForm.setUniversityTrainingStaff(employee);

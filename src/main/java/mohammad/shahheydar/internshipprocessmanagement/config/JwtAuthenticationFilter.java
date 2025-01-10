@@ -8,9 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
-import mohammad.shahheydar.internshipprocessmanagement.service.auth.EmployeeAuthService;
-import mohammad.shahheydar.internshipprocessmanagement.service.auth.JwtService;
-import mohammad.shahheydar.internshipprocessmanagement.service.auth.StudentAuthService;
+import mohammad.shahheydar.internshipprocessmanagement.service.user.EmployeeService;
+import mohammad.shahheydar.internshipprocessmanagement.service.user.JwtService;
+import mohammad.shahheydar.internshipprocessmanagement.service.user.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     private final JwtService jwtService;
-    private final StudentAuthService studentAuthService;
-    private final EmployeeAuthService employeeAuthService;
+    private final StudentService studentService;
+    private final EmployeeService employeeService;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             if (employeeToken.isPresent()) {
                 final String username = jwtService.extractUsername(employeeToken.get().getValue());
-                Employee employee = employeeAuthService.findByEmail(username).get();
+                Employee employee = employeeService.findByEmail(username).get();
 
                 if (jwtService.isTokenValid(employeeToken.get().getValue(), employee))
                     request.setAttribute("employee", employee);
@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (studentToken.isPresent()) {
                 final String username = jwtService.extractUsername(studentToken.get().getValue());
-                Student student = studentAuthService.findByEmail(username).get();
+                Student student = studentService.findByEmail(username).get();
 
                 if (jwtService.isTokenValid(studentToken.get().getValue(), student))
                     request.setAttribute("student", student);
