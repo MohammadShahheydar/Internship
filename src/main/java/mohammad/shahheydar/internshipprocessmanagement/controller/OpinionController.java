@@ -34,7 +34,7 @@ public class OpinionController {
     }
 
     @PostMapping("departmentHead/opinion/internship-forms/{id}")
-    public ResponseEntity<String> departmentHeadOpinionOnInternshipForms(@PathVariable Long id, @RequestParam(required = true) Long guideTeacherId, @RequestBody OpinionDto opinionDto, HttpServletRequest request) {
+    public ResponseEntity<String> departmentHeadOpinionOnInternshipForms(@PathVariable Long id, @RequestParam(required = false) Long guideTeacherId, @RequestBody OpinionDto opinionDto, HttpServletRequest request) {
         try {
             Employee employee = UserExtractor.getEmployee(request);
 

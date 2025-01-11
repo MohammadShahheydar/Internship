@@ -19,7 +19,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByRole(RoleName roleName);
 
 //    todo: not work
-    @Query(nativeQuery = true , value = "select e.* from internship.public.employee e left join internship.public.employee_roles er on er.employee_id = e.id left join internship.public.role r on r.id = er.role_id where r.name = :roleName and :name like CONCAT('%' , e.name, '%', e.lastname , '%')")
+    @Query(nativeQuery = true ,
+            value = "select e.* from internship.public.employee e inner join internship.public.employee_roles er on er.employee_id = e.id inner join internship.public.role r on r.id = er.role_id where r.name = :roleName and (e.name || ' ' || e.lastname ) LIKE '%' || :name || '%'")
     List<Employee> findAllByRoleAndName(String roleName , String name);
 
     @Query(value = "select e from Employee e join fetch e.roles r where r.name = 'GUIDE_TEACHER' and e.id = :id")

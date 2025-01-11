@@ -26,13 +26,13 @@ public class OpinionService {
     private final EmployeeService employeeService;
 
 //    todo: 2 @Transactional . ok ? is it work ?
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public void employeeOpinionOnInternshipForms(OpinionDto opinionDto, Employee opinioner, InternshipForm opinionTarget, InternshipFormProgressState internshipFormProgressState , Long guideTeacherId) {
         opinionTarget.setGuideTeacher(employeeService.findGuideTeacherById(guideTeacherId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND , "guide teacher not found ")));
         employeeOpinionOnInternshipForms(opinionDto , opinioner , opinionTarget , internshipFormProgressState);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public void employeeOpinionOnInternshipForms(OpinionDto opinionDto, Employee opinioner, InternshipForm opinionTarget, InternshipFormProgressState internshipFormProgressState) {
         InternshipFormState formState = opinionDto.getConfirm() ? internshipFormProgressState == InternshipFormProgressState.FACULTY_TRAINING_STAFF ? InternshipFormState.CONFIRM : InternshipFormState.IN_PROGRESS : InternshipFormState.FAIL;
         internshipFormService.updateInternshipFormProgressStateAndEmployeeState(opinionTarget, opinioner, internshipFormProgressState, formState);
