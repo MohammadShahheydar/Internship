@@ -22,14 +22,14 @@ public class InternshipFormController {
 
     private final InternshipFormService internshipFormService;
 
-    @GetMapping("all")
-    public ResponseEntity<Page<InternshipFormListDto>> getAll() {
-        return ResponseEntity.ok(internshipFormService.findAll(Pageable.ofSize(20)));
-    }
+//    @GetMapping("all")
+//    public ResponseEntity<Page<InternshipFormListDto>> getAll(@RequestParam(required = false , defaultValue = "0") int page) {
+//        return ResponseEntity.ok(internshipFormService.findAll(Pageable.ofSize(20).withPage(page)));
+//    }
 
     @GetMapping("student/internship-forms")
-    public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(HttpServletRequest request) {
-        return ResponseEntity.ok(internshipFormService.findAllByStudentId(UserExtractor.getStudent(request).getId(), Pageable.ofSize(20)));
+    public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(HttpServletRequest request , @RequestParam(required = false , defaultValue = "0") int page) {
+        return ResponseEntity.ok(internshipFormService.findAllByStudentId(UserExtractor.getStudent(request).getId(), Pageable.ofSize(20).withPage(page)));
     }
 
     @GetMapping("universityTrainingStaff/internship-forms")

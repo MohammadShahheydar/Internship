@@ -8,5 +8,7 @@ public record InternshipFormListDto(
         String address,
         String term,
         String passedUnit,
-        String supervisorName) {
+        String supervisorName,
+        InternshipFormProgressState progressState,
+        InternshipFormState formState) {
 }
