@@ -3,6 +3,7 @@ package mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.*;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -66,5 +66,17 @@ public class InternshipFormService {
         internshipForm.setProgressState(internshipFormProgressState);
         internshipForm.setFormState(formState);
         internshipFormRepository.save(internshipForm);
+    }
+
+    public Optional<InternshipForm> findStudentInProgressForm(Long studentId) {
+        Student stu = new Student();
+        stu.setId(studentId);
+        return internshipFormRepository.findByStudentAndFormState(stu, InternshipFormState.IN_PROGRESS);
+    }
+
+    public Integer studentInProgressFormCount(Long studentId , InternshipFormState internshipFormState) {
+        Student stu = new Student();
+        stu.setId(studentId);
+        return internshipFormRepository.countByStudentAndFormState(stu , internshipFormState);
     }
 }

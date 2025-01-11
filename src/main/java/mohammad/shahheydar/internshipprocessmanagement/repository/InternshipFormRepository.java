@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface InternshipFormRepository extends JpaRepository<InternshipForm, Long> {
 
@@ -22,4 +24,7 @@ public interface InternshipFormRepository extends JpaRepository<InternshipForm, 
 
     Page<InternshipForm> findAllByProgressStateAndFormState(InternshipFormProgressState internshipFormProgressState, InternshipFormState formState, Pageable pageable);
 
+    Optional<InternshipForm> findByStudentAndFormState(Student student, InternshipFormState formState);
+
+    Integer countByStudentAndFormState(Student student, InternshipFormState formState);
 }
