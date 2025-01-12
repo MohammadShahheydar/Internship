@@ -36,6 +36,10 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
     @JoinColumn(name = "guide_teacher_id")
     private Employee guideTeacher;
 
+    private String letterOfIntroductionPath;
+
+    private String supervisorToken;
+
     @Column(nullable = false, length = 13)
     private String phone;
 

@@ -36,6 +36,12 @@ public class InternshipFormDto implements OpinionTargetDto {
     @Min(value = 80)
     private short passedUnit;
 
+    private EmployeeDto guideTeacher;
+
+    private String letterOfIntroductionPath;
+
+    private String supervisorToken;
+
     private InternshipFormProgressState progressState;
 
     private InternshipFormState formState;

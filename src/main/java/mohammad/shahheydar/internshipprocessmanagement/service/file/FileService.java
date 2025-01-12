@@ -20,6 +20,10 @@ public class FileService {
     private String uploadDir;
 
     public String saveFile(MultipartFile file , String path) throws IOException {
+
+        if (file == null || file.isEmpty())
+            return null;
+
         // Ensure the upload directory exists
         if (path != null && !StringUtils.isEmpty(path)) {
             uploadDir += path;

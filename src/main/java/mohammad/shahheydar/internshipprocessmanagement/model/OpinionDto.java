@@ -1,6 +1,7 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +19,10 @@ import java.util.Date;
 @Data
 public final class OpinionDto {
     private Date seen;
-    private @NotBlank Boolean confirm;
-    private @NotBlank String comment;
+    @NotNull
+    private Boolean confirm;
+    @NotBlank
+    private String comment;
     private Date commentDate;
     private OpinionerDto user;
     private OpinionTargetDto opinionTarget;

@@ -2,7 +2,6 @@ package mohammad.shahheydar.internshipprocessmanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
@@ -41,39 +40,37 @@ public class OpinionController {
     }
 
     @PostMapping("departmentHead/opinion/internship-forms/{id}")
-    public ResponseEntity<String> departmentHeadOpinionOnInternshipForms(@PathVariable Long id, @RequestParam(required = false) Long guideTeacherId, @RequestBody @Valid OpinionDto opinionDto, HttpServletRequest request) {
-        try {
-            Employee employee = UserExtractor.getEmployee(request);
+    public ResponseEntity<String> departmentHeadOpinionOnInternshipForms(
+            @PathVariable Long id,
+            @RequestParam(required = false) Long guideTeacherId,
+            @RequestBody @Valid OpinionDto opinionDto,
+            HttpServletRequest request
+    ) {
 
-            InternshipForm internshipForm = internshipFormService.findOriginalById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship form not found"));
+        Employee employee = UserExtractor.getEmployee(request);
 
-            opinionService.employeeOpinionOnInternshipForms(opinionDto, employee, internshipForm, InternshipFormProgressState.DEPARTMENT_HEAD, guideTeacherId);
+        InternshipForm internshipForm = internshipFormService.findOriginalById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship form not found"));
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("created");
-        } catch (Exception e) {
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
-            return ResponseEntity.status(HttpStatus.CREATED).body("created");
-        }
+        opinionService.employeeOpinionOnInternshipForms(opinionDto, employee, internshipForm, InternshipFormProgressState.DEPARTMENT_HEAD, guideTeacherId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 
     @PostMapping(value = "facultyTrainingStaff/opinion/internship-forms/{id}", consumes = {"multipart/form-data"})
     public ResponseEntity<String> facultyTrainingStaffOpinionOnInternshipForms(
             @PathVariable Long id,
-//            @RequestPart("opinion") @Valid OpinionDto opinion,
-            @RequestPart("file") @Valid @NotNull MultipartFile file,
+            @RequestPart("opinion") @Valid OpinionDto opinion,
+            @RequestPart(value = "file", required = false) MultipartFile file,
             HttpServletRequest request
     ) throws IOException {
 
         String letterOfIntroductionPath = fileService.saveFile(file, "letterOfIntroduction");
-        System.out.println(letterOfIntroductionPath);
 
-//        Employee employee = UserExtractor.getEmployee(request);
-//
-//        InternshipForm internshipForm = internshipFormService.findOriginalById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship form not found"));
-//
-//        opinionService.employeeOpinionOnInternshipForms(opinion, employee, internshipForm, InternshipFormProgressState.FACULTY_TRAINING_STAFF);
+        Employee employee = UserExtractor.getEmployee(request);
+
+        InternshipForm internshipForm = internshipFormService.findOriginalById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship form not found"));
+
+        opinionService.employeeOpinionOnInternshipForms(opinion, employee, internshipForm, InternshipFormProgressState.FACULTY_TRAINING_STAFF, letterOfIntroductionPath);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }

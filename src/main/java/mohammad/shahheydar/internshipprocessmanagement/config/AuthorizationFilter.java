@@ -30,7 +30,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         Employee employee = UserExtractor.getEmployee(request);
         if (employee != null && employee.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(allowedRole::contains)) {
             filterChain.doFilter(request, response);
-            return;
         }
 
         response.setStatus(HttpStatus.FORBIDDEN.value());
