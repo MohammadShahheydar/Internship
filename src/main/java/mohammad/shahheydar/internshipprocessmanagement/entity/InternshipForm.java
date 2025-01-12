@@ -40,6 +40,8 @@ public class InternshipForm extends BaseEntity implements OpinionTarget {
 
     private String supervisorToken;
 
+    private Boolean isSupervisorTokenValid;
+
     @Column(nullable = false, length = 13)
     private String phone;
 

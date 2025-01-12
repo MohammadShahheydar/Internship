@@ -11,6 +11,7 @@ import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.OpinionRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm.InternshipFormService;
 import mohammad.shahheydar.internshipprocessmanagement.service.user.EmployeeService;
+import mohammad.shahheydar.internshipprocessmanagement.service.user.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,8 @@ public class OpinionService {
             String letterOfIntroductionPath
     ) {
         opinionTarget.setLetterOfIntroductionPath(letterOfIntroductionPath);
+        opinionTarget.setSupervisorToken(JwtService.hashPassword(System.currentTimeMillis() + opinionTarget.getSupervisorName() + opinionTarget.getSupervisorPhone()));
+        opinionTarget.setIsSupervisorTokenValid(true);
         employeeOpinionOnInternshipForms(opinionDto, opinioner, opinionTarget, internshipFormProgressState);
     }
 
