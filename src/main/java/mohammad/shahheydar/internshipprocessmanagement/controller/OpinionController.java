@@ -2,6 +2,8 @@ package mohammad.shahheydar.internshipprocessmanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
@@ -12,12 +14,14 @@ import mohammad.shahheydar.internshipprocessmanagement.service.Opinion.OpinionSe
 import mohammad.shahheydar.internshipprocessmanagement.service.file.FileService;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,14 +60,16 @@ public class OpinionController {
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 
-    @PostMapping(value = "facultyTrainingStaff/opinion/internship-forms/{id}", consumes = {"multipart/form-data"})
+    @PostMapping(value = "facultyTrainingStaff/opinion/internship-forms/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<String> facultyTrainingStaffOpinionOnInternshipForms(
             @PathVariable Long id,
-            @RequestPart("opinion") @Valid OpinionDto opinion,
+            @RequestPart(value = "comment") @Valid @NotBlank String comment,
+            @RequestPart(value = "confirm") @Valid @NotNull String confirm,
             @RequestPart(value = "file", required = false) MultipartFile file,
             HttpServletRequest request
     ) throws IOException {
 
+        OpinionDto opinion = OpinionDto.builder().comment(comment).confirm(confirm.equals("1") || confirm.equals("true")).build();
         String letterOfIntroductionPath = fileService.saveFile(file, "letterOfIntroduction");
 
         Employee employee = UserExtractor.getEmployee(request);
