@@ -10,29 +10,37 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 @Service
 public class FileService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
-    public void saveFile(MultipartFile file) throws IOException {
+
+    public String saveFile(MultipartFile file , String path) throws IOException {
         // Ensure the upload directory exists
+        if (path != null && !StringUtils.isEmpty(path)) {
+            uploadDir += path;
+        }
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
         // Normalize the file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         // Check for invalid characters
         if (fileName.contains("..")) {
             throw new IOException("Filename contains invalid path sequence " + fileName);
         }
 
+        fileName = System.currentTimeMillis() + fileName;
         // Copy file to the target location (Replacing existing file with the same name)
         Path targetLocation = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        return path + "/" + fileName;
     }
 }
