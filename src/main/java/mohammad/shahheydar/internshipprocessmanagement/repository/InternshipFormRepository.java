@@ -27,4 +27,6 @@ public interface InternshipFormRepository extends JpaRepository<InternshipForm, 
     Optional<InternshipForm> findByStudentAndFormState(Student student, InternshipFormState formState);
 
     Integer countByStudentAndFormState(Student student, InternshipFormState formState);
+
+    Optional<InternshipForm> findBySupervisorToken(String supervisorToken);
 }

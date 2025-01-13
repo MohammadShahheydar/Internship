@@ -2,12 +2,14 @@ package mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm;
 
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Internship;
 import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.entity.Student;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormListMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipFormMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.*;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipFormRepository;
+import mohammad.shahheydar.internshipprocessmanagement.service.Internship.InternshipService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class InternshipFormService {
     private final InternshipFormRepository internshipFormRepository;
     private final InternshipFormListMapper internshipFormListMapper;
     private final InternshipFormMapper internshipFormMapper;
+    private final InternshipService internshipService;
 
     public Page<InternshipFormListDto> findAll(Pageable pageable) {
         return internshipFormRepository.findAll(pageable).map(internshipFormListMapper::toDto);
@@ -51,6 +54,10 @@ public class InternshipFormService {
         return internshipFormMapper.toDto(internshipFormRepository.save(entity));
     }
 
+    public void update(InternshipForm internshipForm) {
+        internshipFormRepository.save(internshipForm);
+    }
+
     public void updateInternshipFormProgressStateAndEmployeeState(InternshipForm internshipForm, Employee employee, InternshipFormProgressState internshipFormProgressState, InternshipFormState formState) {
         switch (internshipFormProgressState) {
             case UNIVERSITY_TRAINING_STAFF:
@@ -59,9 +66,14 @@ public class InternshipFormService {
             case DEPARTMENT_HEAD:
                 internshipForm.setDepartmentHead(employee);
                 break;
-            case FACULTY_TRAINING_STAFF:
+            case FACULTY_TRAINING_STAFF: {
                 internshipForm.setFacultyTrainingStaff(employee);
+                Internship internship = new Internship();
+                internship.setStudent(internshipForm.getStudent());
+                internship.setGuideTeacher(internshipForm.getGuideTeacher());
+                internshipService.save(internship);
                 break;
+            }
         }
         internshipForm.setProgressState(internshipFormProgressState);
         internshipForm.setFormState(formState);
@@ -78,5 +90,9 @@ public class InternshipFormService {
         Student stu = new Student();
         stu.setId(studentId);
         return internshipFormRepository.countByStudentAndFormState(stu , internshipFormState);
+    }
+
+    public Optional<InternshipForm> findInternshipFormBySupervisorToken(String token) {
+        return internshipFormRepository.findBySupervisorToken(token);
     }
 }

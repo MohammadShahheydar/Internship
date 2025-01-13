@@ -52,7 +52,6 @@ public class OpinionService {
     ) {
         opinionTarget.setLetterOfIntroductionPath(letterOfIntroductionPath);
         opinionTarget.setSupervisorToken(JwtService.hashPassword(System.currentTimeMillis() + opinionTarget.getSupervisorName() + opinionTarget.getSupervisorPhone()));
-        opinionTarget.setIsSupervisorTokenValid(true);
         employeeOpinionOnInternshipForms(opinionDto, opinioner, opinionTarget, internshipFormProgressState);
     }
 

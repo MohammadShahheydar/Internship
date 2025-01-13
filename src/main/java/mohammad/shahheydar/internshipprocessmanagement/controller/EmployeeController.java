@@ -5,13 +5,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import mohammad.shahheydar.internshipprocessmanagement.entity.InternshipForm;
 import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
+import mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm.InternshipFormService;
 import mohammad.shahheydar.internshipprocessmanagement.service.user.EmployeeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+
 
     @Value("${security.jwt.expiration-time}")
     private int jwtExpiration;
@@ -42,6 +46,12 @@ public class EmployeeController {
     @PostMapping("register")
     public ResponseEntity<String> register(@Valid @RequestBody EmployeeDto employeeDto) {
         employeeService.register(employeeDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
+    }
+
+    @PostMapping("supervisor/register")
+    public ResponseEntity<String> supervisorRegister(@Valid @RequestBody EmployeeDto employeeDto , @PathVariable String token) {
+        employeeService.registerSupervisor(employeeDto , token);
         return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
     }
 

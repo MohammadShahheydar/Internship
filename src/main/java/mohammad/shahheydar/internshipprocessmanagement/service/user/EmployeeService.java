@@ -3,15 +3,19 @@ package mohammad.shahheydar.internshipprocessmanagement.service.user;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.config.RoleCache;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
-import mohammad.shahheydar.internshipprocessmanagement.entity.Role;
+import mohammad.shahheydar.internshipprocessmanagement.entity.*;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.EmployeeMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.LoginRequestDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.RoleName;
 import mohammad.shahheydar.internshipprocessmanagement.repository.EmployeeRepository;
+import mohammad.shahheydar.internshipprocessmanagement.service.Internship.InternshipService;
+import mohammad.shahheydar.internshipprocessmanagement.service.InternshipForm.InternshipFormService;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,10 +24,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class EmployeeService {
+
     private final EmployeeRepository employeeRepository;
     private final RoleCache roleCache;
     private final EmployeeMapper employeeMapper;
     private final JwtService jwtService;
+    private final InternshipFormService internshipFormService;
+    private final InternshipService internshipService;
 
     public String authenticate(LoginRequestDto loginRequestDto) {
         Employee employee = employeeRepository.findByEmail(loginRequestDto.username()).orElseThrow(() -> new NoSuchElementException("wrong username or password"));
@@ -60,5 +67,18 @@ public class EmployeeService {
 
     public Optional<Employee> findGuideTeacherById(Long id) {
         return employeeRepository.findGuideTeacherById(id);
+    }
+
+    @Transactional(rollbackFor = {Throwable.class})
+    public Employee registerSupervisor(EmployeeDto employeeDto , String token) {
+        InternshipForm internshipForm = internshipFormService.findInternshipFormBySupervisorToken(token).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND , "invalid token"));
+        internshipForm.setSupervisorToken(null);
+        internshipFormService.update(internshipForm);
+        Student student = internshipForm.getStudent();
+        Employee supervisor = register(employeeDto);
+        Internship internship = internshipService.findByStudent(student).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST , "student not found"));
+        internship.setSupervisor(supervisor);
+        internshipService.update(internship);
+        return supervisor;
     }
 }
