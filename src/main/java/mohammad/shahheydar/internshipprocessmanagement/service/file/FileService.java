@@ -10,17 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.util.Objects;
 
 @Service
 public class FileService {
 
     @Value("${file.upload-dir}")
-    private String uploadDir;
+    private String resourceUploadDir;
 
     public String saveFile(MultipartFile file , String path) throws IOException {
-
+        String uploadDir = resourceUploadDir;
         if (file == null || file.isEmpty())
             return null;
 
@@ -45,6 +44,6 @@ public class FileService {
         // Copy file to the target location (Replacing existing file with the same name)
         Path targetLocation = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-        return path + "/" + fileName;
+        return STR."\{path}/\{fileName}";
     }
 }
