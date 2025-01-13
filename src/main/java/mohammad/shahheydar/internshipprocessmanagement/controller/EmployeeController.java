@@ -50,7 +50,7 @@ public class EmployeeController {
     }
 
     @PostMapping("supervisor/register")
-    public ResponseEntity<String> supervisorRegister(@Valid @RequestBody EmployeeDto employeeDto , @PathVariable String token) {
+    public ResponseEntity<String> supervisorRegister(@Valid @RequestBody EmployeeDto employeeDto , @RequestParam String token) {
         employeeService.registerSupervisor(employeeDto , token);
         return ResponseEntity.status(HttpStatus.CREATED).body("employee created");
     }
