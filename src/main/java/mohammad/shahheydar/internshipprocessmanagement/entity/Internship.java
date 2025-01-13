@@ -29,13 +29,13 @@ public class Internship extends BaseEntity {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
 
     private String supervisorReport;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "guide_teacher_id")
     private Employee guideTeacher;
 
