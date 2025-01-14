@@ -23,15 +23,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(map);
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(IOException.class)
+    @ExceptionHandler(IOException.class)
     public ResponseEntity<Map<String , String>> handleException(IOException ex){
         Map<String , String> map = new HashMap<>();
         map.put("error" , ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String , String>> handleException(Exception ex){
+        Map<String , String> map = new HashMap<>();
+        map.put("error" , ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();

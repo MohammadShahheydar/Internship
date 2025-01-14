@@ -44,6 +44,6 @@ public class FileService {
         // Copy file to the target location (Replacing existing file with the same name)
         Path targetLocation = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-        return STR."\{path}/\{fileName}";
+        return path + "/" + fileName;
     }
 }
