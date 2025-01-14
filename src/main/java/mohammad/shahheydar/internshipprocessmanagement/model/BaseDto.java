@@ -13,10 +13,8 @@ import java.time.LocalDate;
 public class BaseDto {
     private long id;
 
-    @JsonIgnore
     private LocalDate updatedAt;
 
-    @JsonIgnore
     private LocalDate createdAt;
 
     @JsonIgnore

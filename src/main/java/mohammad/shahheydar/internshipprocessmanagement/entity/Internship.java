@@ -40,6 +40,10 @@ public class Internship extends BaseEntity {
     private Employee guideTeacher;
 
     @OneToMany()
-    @JoinColumn()
+    @JoinColumn(name = "internship_id")
     List<WeeklyReport> weeklyReports;
+
+    @OneToMany()
+    @JoinColumn(name = "internship_id")
+    List<PresenceAndAbsence> presenceAndAbsences;
 }

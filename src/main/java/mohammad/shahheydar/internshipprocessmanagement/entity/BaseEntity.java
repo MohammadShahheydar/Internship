@@ -1,5 +1,6 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,5 +31,6 @@ public abstract class BaseEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     private LocalDateTime deletedAt;
 }

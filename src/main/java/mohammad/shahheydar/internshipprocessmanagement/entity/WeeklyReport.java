@@ -2,6 +2,8 @@ package mohammad.shahheydar.internshipprocessmanagement.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +18,7 @@ import java.util.Date;
 @Entity
 public class WeeklyReport extends BaseEntity {
 
-    @Column(nullable = false)
-    private byte WeakNumber;
+    private byte weakNumber;
 
     private String reportAttachment;
 
@@ -26,10 +27,4 @@ public class WeeklyReport extends BaseEntity {
     private Boolean supervisorConfirmation;
 
     private String reportTitle;
-
-    private Date reportDate;
-
-//    @ManyToOne
-//    @JoinColumn(name = "internship_id")
-//    private Internship internship;
 }
