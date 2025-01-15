@@ -19,21 +19,30 @@ public class Internship extends BaseEntity {
     @OneToMany()
     @JoinColumn(name = "internship_id")
     List<WeeklyReport> weeklyReports;
+
     @OneToMany()
     @JoinColumn(name = "internship_id")
     List<PresenceAndAbsence> presenceAndAbsences;
+
     private String studentFinalReport;
+
     private Timestamp studentObjectionDate;
+
     @Column(columnDefinition = "text")
     private String studentObjectionText;
+
     private int internshipState;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "student_id")
     private Student student;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
+
     private String supervisorReport;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "guide_teacher_id")
     private Employee guideTeacher;
