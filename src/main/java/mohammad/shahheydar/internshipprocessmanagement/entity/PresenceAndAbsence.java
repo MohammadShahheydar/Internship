@@ -17,7 +17,7 @@ import lombok.Setter;
 public class PresenceAndAbsence extends BaseEntity {
 
     @NotNull
-    private byte weakNumber;
+    private short weakNumber;
 
     private boolean supervisorConfirmation;
 

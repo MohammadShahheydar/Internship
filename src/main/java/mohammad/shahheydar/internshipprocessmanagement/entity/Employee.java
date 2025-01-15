@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mohammad.shahheydar.internshipprocessmanagement.model.EmployeeDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.GrantedAuthority;
 
 import java.util.Collection;

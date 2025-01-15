@@ -63,4 +63,8 @@ public abstract class User extends BaseEntity implements UserDetail {
         return UserDetail.super.isEnabled();
     }
 
+    public boolean equals(User user) {
+        return this.getId() == user.getId();
+    }
+
 }

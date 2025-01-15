@@ -20,16 +20,13 @@ import java.util.Date;
 @Entity
 public class WeeklyReport extends BaseEntity {
 
-    @NotNull
-    private byte weakNumber;
+    private short weakNumber;
 
     private String reportAttachment;
 
-    @NotBlank
     private String reportText;
 
     private Boolean supervisorConfirmation;
 
-    @NotBlank
     private String reportTitle;
 }

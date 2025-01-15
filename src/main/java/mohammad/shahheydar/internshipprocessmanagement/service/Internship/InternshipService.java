@@ -23,6 +23,10 @@ public class InternshipService {
     private final WeeklyReportService weeklyReportService;
     private final PresenceAndAbsenceService presenceAndAbsenceService;
 
+    public Internship findById(Long id) {
+        return internshipRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship not found"));
+    }
+
     public Internship save(Internship internship) {
         return internshipRepository.save(internship);
     }
@@ -43,17 +47,49 @@ public class InternshipService {
         return internshipMapper.toDtoList(internshipRepository.findBySupervisor(supervisor));
     }
 
-    public void saveWeeklyReport(Long internshipId, WeeklyReport weeklyReport) {
-        Internship internship = internshipRepository.findById(internshipId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship not found"));
+    public void saveWeeklyReport(Student student , Long internshipId, WeeklyReport weeklyReport) {
+        if (!studentHasPermission(student , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
+        Internship internship = findById(internshipId);
         WeeklyReport savedWeeklyReport = weeklyReportService.save(weeklyReport);
         internship.addWeeklyReport(savedWeeklyReport);
         internshipRepository.save(internship);
     }
 
-    public void savePresenceAndAbsence(Long internshipId, PresenceAndAbsence presenceAndAbsence) {
-        Internship internship = internshipRepository.findById(internshipId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship not found"));
+    public void savePresenceAndAbsence(Student student , Long internshipId, PresenceAndAbsence presenceAndAbsence) {
+        if (!studentHasPermission(student , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
+        Internship internship = findById(internshipId);
         PresenceAndAbsence savedPresenceAndAbsence = presenceAndAbsenceService.save(presenceAndAbsence);
         internship.addPresenceAndAbsences(savedPresenceAndAbsence);
         internshipRepository.save(internship);
+    }
+
+    public void supervisorConfirmWeeklyReport(Employee supervisor, Long internshipId, Long reportId) {
+        if (!supervisorHasPermission(supervisor , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
+
+        WeeklyReport weeklyReport = weeklyReportService.findById(reportId);
+        weeklyReport.setSupervisorConfirmation(true);
+        weeklyReportService.save(weeklyReport);
+    }
+
+    public void supervisorConfirmPresenceAndAbsence(Employee supervisor, Long internshipId, Long reportId) {
+        if (!supervisorHasPermission(supervisor , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
+
+        PresenceAndAbsence presenceAndAbsence = presenceAndAbsenceService.findById(reportId);
+        presenceAndAbsence.setSupervisorConfirmation(true);
+        presenceAndAbsenceService.save(presenceAndAbsence);
+    }
+
+    private boolean supervisorHasPermission(Employee supervisor , Long internshipId) {
+        Internship internship = findById(internshipId);
+        return internship.getSupervisor().equals(supervisor);
+    }
+
+    private boolean studentHasPermission(Student student , Long internshipId) {
+        Internship internship = findById(internshipId);
+        return internship.getStudent().equals(student);
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -13,10 +14,10 @@ import java.time.LocalDate;
 public class BaseDto {
     private long id;
 
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @JsonIgnore
-    private LocalDate deletedAt;
+    private LocalDateTime deletedAt;
 }

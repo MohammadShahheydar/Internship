@@ -26,6 +26,6 @@ public class InternshipDto extends BaseDto{
     EmployeeDto supervisor;
     String supervisorReport;
     EmployeeDto guideTeacher;
-    List<WeeklyReport> weeklyReports;
+    List<WeeklyReportDto> weeklyReports;
     List<PresenceAndAbsence> presenceAndAbsences;
 }
