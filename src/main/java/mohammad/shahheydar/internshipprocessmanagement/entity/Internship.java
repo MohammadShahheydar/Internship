@@ -46,4 +46,12 @@ public class Internship extends BaseEntity {
     @OneToMany()
     @JoinColumn(name = "internship_id")
     List<PresenceAndAbsence> presenceAndAbsences;
+
+    public void addWeeklyReport(WeeklyReport weeklyReport) {
+        this.weeklyReports.add(weeklyReport);
+    }
+
+        public void addPresenceAndAbsences(PresenceAndAbsence presenceAndAbsences) {
+        this.presenceAndAbsences.add(presenceAndAbsences);
+    }
 }
