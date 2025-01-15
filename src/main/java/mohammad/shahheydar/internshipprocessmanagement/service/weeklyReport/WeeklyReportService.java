@@ -32,4 +32,10 @@ public class WeeklyReportService {
         weeklyReport.setReportAttachment(reportAttachmentPath);
         return weeklyReport;
     }
+
+    public void confirm(Long id) {
+        WeeklyReport weeklyReport = findById(id);
+        weeklyReport.setSupervisorConfirmation(true);
+        save(weeklyReport);
+    }
 }

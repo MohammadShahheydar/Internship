@@ -20,4 +20,10 @@ public class PresenceAndAbsenceService {
     public PresenceAndAbsence findById(Long id) {
         return presenceAndAbsenceRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "report not found"));
     }
+
+    public void confirm(Long id) {
+        PresenceAndAbsence presenceAndAbsence = findById(id);
+        presenceAndAbsence.setSupervisorConfirmation(true);
+        save(presenceAndAbsence);
+    }
 }

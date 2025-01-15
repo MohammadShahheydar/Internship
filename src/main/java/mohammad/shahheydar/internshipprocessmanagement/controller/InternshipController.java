@@ -43,6 +43,12 @@ public class InternshipController {
                         ));
     }
 
+    @GetMapping("supervisor/internship")
+    public ResponseEntity<List<InternshipDto>> getSupervisorInternship(HttpServletRequest request) {
+        return ResponseEntity.ok(
+                internshipService.findDtoBySupervisor(UserExtractor.getEmployee(request)));
+    }
+
     @PostMapping(value = "student/internship/{id}/weekly-report", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<String> addWeeklyReport(
             @PathVariable Long id ,
@@ -74,11 +80,5 @@ public class InternshipController {
     public ResponseEntity<String> confirmPresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
         internshipService.supervisorConfirmPresenceAndAbsence(UserExtractor.getEmployee(request) , id ,reportId);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
-    }
-
-    @GetMapping("supervisor/internship")
-    public ResponseEntity<List<InternshipDto>> getSupervisorInternship(HttpServletRequest request) {
-        return ResponseEntity.ok(
-                internshipService.findDtoBySupervisor(UserExtractor.getEmployee(request)));
     }
 }

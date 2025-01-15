@@ -69,18 +69,14 @@ public class InternshipService {
         if (!supervisorHasPermission(supervisor , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
 
-        WeeklyReport weeklyReport = weeklyReportService.findById(reportId);
-        weeklyReport.setSupervisorConfirmation(true);
-        weeklyReportService.save(weeklyReport);
+        weeklyReportService.confirm(reportId);
     }
 
     public void supervisorConfirmPresenceAndAbsence(Employee supervisor, Long internshipId, Long reportId) {
         if (!supervisorHasPermission(supervisor , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
 
-        PresenceAndAbsence presenceAndAbsence = presenceAndAbsenceService.findById(reportId);
-        presenceAndAbsence.setSupervisorConfirmation(true);
-        presenceAndAbsenceService.save(presenceAndAbsence);
+        presenceAndAbsenceService.confirm(reportId);
     }
 
     private boolean supervisorHasPermission(Employee supervisor , Long internshipId) {
