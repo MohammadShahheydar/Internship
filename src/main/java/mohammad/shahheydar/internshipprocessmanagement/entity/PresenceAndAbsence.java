@@ -19,7 +19,7 @@ public class PresenceAndAbsence extends BaseEntity {
     @NotNull
     private short weakNumber;
 
-    private boolean supervisorConfirmation;
+    private Boolean supervisorConfirmation;
 
     private Boolean guideTeacherConfirmation;
 
