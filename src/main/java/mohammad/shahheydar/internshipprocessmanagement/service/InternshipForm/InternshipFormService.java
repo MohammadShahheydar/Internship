@@ -71,6 +71,7 @@ public class InternshipFormService {
                 Internship internship = new Internship();
                 internship.setStudent(internshipForm.getStudent());
                 internship.setGuideTeacher(internshipForm.getGuideTeacher());
+                internship.setState(InternshipState.IN_PROGRESS);
                 internshipService.save(internship);
                 break;
             }
