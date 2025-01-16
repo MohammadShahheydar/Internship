@@ -70,7 +70,7 @@ public class InternshipController {
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
 
-    @PostMapping(value = "student/internship/{id}/weekly-report/{reportId}/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @PutMapping(value = "student/internship/{id}/weekly-report/{reportId}/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<String> updateWeeklyReport(
             @PathVariable Long id ,
             @PathVariable Long reportId,
@@ -92,7 +92,7 @@ public class InternshipController {
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
 
-    @PostMapping("student/internship/{id}/presence-and-absence-report/{reportId}/update")
+    @PutMapping("student/internship/{id}/presence-and-absence-report/{reportId}/update")
     public ResponseEntity<String> updatePresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId , @RequestBody @Valid PresenceAndAbsence presenceAndAbsence, HttpServletRequest request) {
         internshipService.updatePresenceAndAbsence(UserExtractor.getStudent(request) , id , presenceAndAbsence , reportId);
         return ResponseEntity.status(HttpStatus.OK).body("report updated");
