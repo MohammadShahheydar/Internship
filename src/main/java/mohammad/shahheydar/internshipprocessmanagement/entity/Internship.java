@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipState;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -31,7 +32,9 @@ public class Internship extends BaseEntity {
     @Column(columnDefinition = "text")
     private String studentObjectionText;
 
-    private int internshipState;
+    @Column(nullable = false)
+    @Enumerated
+    private InternshipState state;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "student_id")

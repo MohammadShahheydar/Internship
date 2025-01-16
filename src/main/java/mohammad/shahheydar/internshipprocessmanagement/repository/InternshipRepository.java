@@ -13,4 +13,6 @@ public interface InternshipRepository extends JpaRepository<Internship , Long> {
     Optional<Internship> findByStudent(Student student);
 
     List<Internship> findBySupervisor(Employee supervisor);
+
+    List<Internship> findByGuideTeacher(Employee teacher);
 }

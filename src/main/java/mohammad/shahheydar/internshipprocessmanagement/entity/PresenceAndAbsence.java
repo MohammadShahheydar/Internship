@@ -21,6 +21,8 @@ public class PresenceAndAbsence extends BaseEntity {
 
     private boolean supervisorConfirmation;
 
+    private Boolean guideTeacherConfirmation;
+
     @NotBlank
     private String weekLog;
 

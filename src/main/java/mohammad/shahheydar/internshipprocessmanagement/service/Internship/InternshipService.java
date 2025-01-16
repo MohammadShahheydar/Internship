@@ -47,6 +47,10 @@ public class InternshipService {
         return internshipMapper.toDtoList(internshipRepository.findBySupervisor(supervisor));
     }
 
+    public List<InternshipDto> findDtoByGuideTeacher(Employee guideTeacher) {
+        return internshipMapper.toDtoList(internshipRepository.findByGuideTeacher(guideTeacher));
+    }
+
     public void saveWeeklyReport(Student student , Long internshipId, WeeklyReport weeklyReport) {
         if (!studentHasPermission(student , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
@@ -69,14 +73,28 @@ public class InternshipService {
         if (!supervisorHasPermission(supervisor , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
 
-        weeklyReportService.confirm(reportId);
+        weeklyReportService.supervisorConfirm(reportId);
     }
 
     public void supervisorConfirmPresenceAndAbsence(Employee supervisor, Long internshipId, Long reportId) {
         if (!supervisorHasPermission(supervisor , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
 
-        presenceAndAbsenceService.confirm(reportId);
+        presenceAndAbsenceService.supervisorConfirm(reportId);
+    }
+
+    public void guideTeacherConfirmWeeklyReport(Employee guideTeacher, Long internshipId, Long reportId) {
+        if (!guideTeacherHasPermission(guideTeacher , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "guideTeacher access denied");
+
+        weeklyReportService.guideTeacherConfirm(reportId);
+    }
+
+    public void guideTeacherConfirmPresenceAndAbsence(Employee guideTeacher, Long internshipId, Long reportId) {
+        if (!guideTeacherHasPermission(guideTeacher , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "guideTeacher access denied");
+
+        presenceAndAbsenceService.guideTeacherConfirm(reportId);
     }
 
     private boolean supervisorHasPermission(Employee supervisor , Long internshipId) {
@@ -87,5 +105,10 @@ public class InternshipService {
     private boolean studentHasPermission(Student student , Long internshipId) {
         Internship internship = findById(internshipId);
         return internship.getStudent().equals(student);
+    }
+
+    private boolean guideTeacherHasPermission(Employee guideTeacher , Long internshipId) {
+        Internship internship = findById(internshipId);
+        return internship.getGuideTeacher().equals(guideTeacher);
     }
 }

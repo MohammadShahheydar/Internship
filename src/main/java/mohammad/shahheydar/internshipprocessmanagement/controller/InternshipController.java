@@ -43,6 +43,12 @@ public class InternshipController {
                         ));
     }
 
+    @GetMapping("guideTeacher/internship")
+    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(HttpServletRequest request) {
+        return ResponseEntity.ok(
+                internshipService.findDtoByGuideTeacher(UserExtractor.getEmployee(request)));
+    }
+
     @GetMapping("supervisor/internship")
     public ResponseEntity<List<InternshipDto>> getSupervisorInternship(HttpServletRequest request) {
         return ResponseEntity.ok(
@@ -71,14 +77,26 @@ public class InternshipController {
     }
 
     @PostMapping("supervisor/internship/{id}/confirm-weekly-report/{reportId}")
-    public ResponseEntity<String> confirmWeeklyReport(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
+    public ResponseEntity<String> supervisorConfirmWeeklyReport(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
         internshipService.supervisorConfirmWeeklyReport(UserExtractor.getEmployee(request) , id ,reportId);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("supervisor/internship/{id}/confirm-presence-and-absence-report/{reportId}")
-    public ResponseEntity<String> confirmPresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
+    public ResponseEntity<String> supervisorConfirmPresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
         internshipService.supervisorConfirmPresenceAndAbsence(UserExtractor.getEmployee(request) , id ,reportId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
+    }
+
+    @PostMapping("guideTeacher/internship/{id}/confirm-weekly-report/{reportId}")
+    public ResponseEntity<String> guideTeacherConfirmWeeklyReport(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
+        internshipService.guideTeacherConfirmWeeklyReport(UserExtractor.getEmployee(request) , id ,reportId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
+    }
+
+    @PostMapping("guideTeacher/internship/{id}/confirm-presence-and-absence-report/{reportId}")
+    public ResponseEntity<String> guideTeacherConfirmPresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId, HttpServletRequest request) {
+        internshipService.guideTeacherConfirmPresenceAndAbsence(UserExtractor.getEmployee(request) , id ,reportId);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 }

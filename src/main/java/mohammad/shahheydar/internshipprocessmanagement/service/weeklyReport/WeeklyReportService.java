@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class WeeklyReportService {
@@ -33,9 +31,15 @@ public class WeeklyReportService {
         return weeklyReport;
     }
 
-    public void confirm(Long id) {
+    public void supervisorConfirm(Long id) {
         WeeklyReport weeklyReport = findById(id);
         weeklyReport.setSupervisorConfirmation(true);
+        save(weeklyReport);
+    }
+
+    public void guideTeacherConfirm(Long id) {
+        WeeklyReport weeklyReport = findById(id);
+        weeklyReport.setGuideTeacherConfirmation(true);
         save(weeklyReport);
     }
 }

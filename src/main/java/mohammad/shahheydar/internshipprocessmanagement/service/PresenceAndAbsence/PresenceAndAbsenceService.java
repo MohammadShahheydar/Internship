@@ -21,9 +21,15 @@ public class PresenceAndAbsenceService {
         return presenceAndAbsenceRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "report not found"));
     }
 
-    public void confirm(Long id) {
+    public void supervisorConfirm(Long id) {
         PresenceAndAbsence presenceAndAbsence = findById(id);
         presenceAndAbsence.setSupervisorConfirmation(true);
+        save(presenceAndAbsence);
+    }
+
+    public void guideTeacherConfirm(Long id) {
+        PresenceAndAbsence presenceAndAbsence = findById(id);
+        presenceAndAbsence.setGuideTeacherConfirmation(true);
         save(presenceAndAbsence);
     }
 }
