@@ -54,11 +54,11 @@ public class InternshipService {
         return internshipMapper.toDtoList(internshipRepository.findByGuideTeacher(guideTeacher));
     }
 
-    public void saveWeeklyReport(Student student , Long internshipId, WeeklyReport weeklyReport) {
+    public void saveWeeklyReport(Student student , Long internshipId, WeeklyReportDto weeklyReport) {
         if (!studentHasPermission(student , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
         Internship internship = findById(internshipId);
-        WeeklyReport savedWeeklyReport = weeklyReportService.save(weeklyReport);
+        WeeklyReport savedWeeklyReport = weeklyReportService.save(weeklyReportMapper.toEntity(weeklyReport));
         internship.addWeeklyReport(savedWeeklyReport);
         internshipRepository.save(internship);
     }

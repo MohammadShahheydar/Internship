@@ -59,14 +59,15 @@ public class InternshipController {
     @PostMapping(value = "student/internship/{id}/weekly-report")
     public ResponseEntity<String> addWeeklyReport(
             @PathVariable Long id,
-            @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
-            @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
-            @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
-            @RequestPart(value = "reportAttachment", required = false) MultipartFile reportAttachment,
+            @RequestBody @Valid WeeklyReportDto weeklyReport,
+//            @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
+//            @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
+//            @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
+//            @RequestPart(value = "reportAttachment", required = false) MultipartFile reportAttachment,
             HttpServletRequest request
     ) throws IOException {
-        String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
-        WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
+//        String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
+//        WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
         internshipService.saveWeeklyReport(UserExtractor.getStudent(request), id, weeklyReport);
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
