@@ -44,6 +44,10 @@ public class Internship extends BaseEntity {
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
 
+    @OneToOne
+    @JoinColumn(name = "internship_form_id")
+    private InternshipForm internshipForm;
+
     private String supervisorReport;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

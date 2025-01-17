@@ -31,4 +31,7 @@ public class UserDto extends BaseDto {
 
     @NotNull
     String password;
+
+    @NotNull
+    String code;
 }

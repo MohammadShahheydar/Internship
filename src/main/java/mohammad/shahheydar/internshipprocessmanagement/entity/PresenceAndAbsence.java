@@ -28,4 +28,8 @@ public class PresenceAndAbsence extends BaseEntity {
 
     @NotNull
     private short totalHour;
+
+    private String from;
+
+    private String to;
 }

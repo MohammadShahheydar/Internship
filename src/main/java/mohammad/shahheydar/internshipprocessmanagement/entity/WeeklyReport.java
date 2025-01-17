@@ -31,4 +31,8 @@ public class WeeklyReport extends BaseEntity {
     private Boolean guideTeacherConfirmation;
 
     private String reportTitle;
+
+    private String from;
+
+    private String to;
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.PresenceAndAbsence;
 import mohammad.shahheydar.internshipprocessmanagement.entity.WeeklyReport;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.service.Internship.InternshipService;
 import mohammad.shahheydar.internshipprocessmanagement.service.file.FileService;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
@@ -57,7 +58,7 @@ public class InternshipController {
 
     @PostMapping(value = "student/internship/{id}/weekly-report", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<String> addWeeklyReport(
-            @PathVariable Long id ,
+            @PathVariable Long id,
             @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
             @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
             @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
@@ -66,59 +67,60 @@ public class InternshipController {
     ) throws IOException {
         String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
         WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
-        internshipService.saveWeeklyReport(UserExtractor.getStudent(request) , id , weeklyReport);
+        internshipService.saveWeeklyReport(UserExtractor.getStudent(request), id, weeklyReport);
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
 
     @PutMapping(value = "student/internship/{id}/weekly-report/{reportId}/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<String> updateWeeklyReport(
-            @PathVariable Long id ,
+            @PathVariable Long id,
             @PathVariable Long reportId,
-            @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
-            @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
-            @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
-            @RequestPart(value = "reportAttachment", required = false) MultipartFile reportAttachment,
+            @RequestBody @Valid WeeklyReportDto weeklyReport,
+//            @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
+//            @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
+//            @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
+//            @RequestPart(value = "reportAttachment", required = false) MultipartFile reportAttachment,
             HttpServletRequest request
     ) throws IOException {
-        String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
-        WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
-        internshipService.updateWeeklyReport(UserExtractor.getStudent(request) , id , weeklyReport , reportId);
+//        String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
+//        WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
+        internshipService.updateWeeklyReport(UserExtractor.getStudent(request), id, weeklyReport, reportId);
         return ResponseEntity.status(HttpStatus.OK).body("report updated");
     }
 
     @PostMapping("student/internship/{id}/presence-and-absence-report")
-    public ResponseEntity<String> addPresenceAndAbsence(@PathVariable Long id , @RequestBody @Valid PresenceAndAbsence presenceAndAbsence, HttpServletRequest request) {
-        internshipService.savePresenceAndAbsence(UserExtractor.getStudent(request) , id , presenceAndAbsence);
+    public ResponseEntity<String> addPresenceAndAbsence(@PathVariable Long id, @RequestBody @Valid PresenceAndAbsence presenceAndAbsence, HttpServletRequest request) {
+        internshipService.savePresenceAndAbsence(UserExtractor.getStudent(request), id, presenceAndAbsence);
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
 
     @PutMapping("student/internship/{id}/presence-and-absence-report/{reportId}/update")
-    public ResponseEntity<String> updatePresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId , @RequestBody @Valid PresenceAndAbsence presenceAndAbsence, HttpServletRequest request) {
-        internshipService.updatePresenceAndAbsence(UserExtractor.getStudent(request) , id , presenceAndAbsence , reportId);
+    public ResponseEntity<String> updatePresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid PresenceAndAbsence presenceAndAbsence, HttpServletRequest request) {
+        internshipService.updatePresenceAndAbsence(UserExtractor.getStudent(request), id, presenceAndAbsence, reportId);
         return ResponseEntity.status(HttpStatus.OK).body("report updated");
     }
 
     @PostMapping("supervisor/internship/{id}/confirm-weekly-report/{reportId}")
-    public ResponseEntity<String> supervisorConfirmWeeklyReport(@PathVariable Long id , @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm , HttpServletRequest request) {
-        internshipService.supervisorConfirmWeeklyReport(UserExtractor.getEmployee(request) , id ,reportId , confirm);
+    public ResponseEntity<String> supervisorConfirmWeeklyReport(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm, HttpServletRequest request) {
+        internshipService.supervisorConfirmWeeklyReport(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("supervisor/internship/{id}/confirm-presence-and-absence-report/{reportId}")
-    public ResponseEntity<String> supervisorConfirmPresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm , HttpServletRequest request) {
-        internshipService.supervisorConfirmPresenceAndAbsence(UserExtractor.getEmployee(request) , id ,reportId , confirm);
+    public ResponseEntity<String> supervisorConfirmPresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm, HttpServletRequest request) {
+        internshipService.supervisorConfirmPresenceAndAbsence(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("guideTeacher/internship/{id}/confirm-weekly-report/{reportId}")
-    public ResponseEntity<String> guideTeacherConfirmWeeklyReport(@PathVariable Long id , @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm , HttpServletRequest request) {
-        internshipService.guideTeacherConfirmWeeklyReport(UserExtractor.getEmployee(request) , id ,reportId , confirm);
+    public ResponseEntity<String> guideTeacherConfirmWeeklyReport(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm, HttpServletRequest request) {
+        internshipService.guideTeacherConfirmWeeklyReport(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("guideTeacher/internship/{id}/confirm-presence-and-absence-report/{reportId}")
-    public ResponseEntity<String> guideTeacherConfirmPresenceAndAbsence(@PathVariable Long id , @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm ,  HttpServletRequest request) {
-        internshipService.guideTeacherConfirmPresenceAndAbsence(UserExtractor.getEmployee(request) , id ,reportId , confirm);
+    public ResponseEntity<String> guideTeacherConfirmPresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid @NotNull Boolean confirm, HttpServletRequest request) {
+        internshipService.guideTeacherConfirmPresenceAndAbsence(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 }

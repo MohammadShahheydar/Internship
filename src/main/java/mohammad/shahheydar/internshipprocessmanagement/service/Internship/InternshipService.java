@@ -3,7 +3,9 @@ package mohammad.shahheydar.internshipprocessmanagement.service.Internship;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.*;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
+import mohammad.shahheydar.internshipprocessmanagement.mapper.WeeklyReportMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.PresenceAndAbsence.PresenceAndAbsenceService;
 import mohammad.shahheydar.internshipprocessmanagement.service.weeklyReport.WeeklyReportService;
@@ -22,6 +24,7 @@ public class InternshipService {
     private final InternshipMapper internshipMapper;
     private final WeeklyReportService weeklyReportService;
     private final PresenceAndAbsenceService presenceAndAbsenceService;
+    private final WeeklyReportMapper weeklyReportMapper;
 
     public Internship findById(Long id) {
         return internshipRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship not found"));
@@ -60,10 +63,10 @@ public class InternshipService {
         internshipRepository.save(internship);
     }
 
-    public void updateWeeklyReport(Student student , Long internshipId, WeeklyReport weeklyReport , Long reportId) {
+    public void updateWeeklyReport(Student student , Long internshipId, WeeklyReportDto weeklyReport , Long reportId) {
         if (!studentHasPermission(student , internshipId))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
-        weeklyReportService.update(weeklyReport , reportId);
+        weeklyReportService.update(weeklyReportMapper.toEntity(weeklyReport) , reportId);
     }
 
     public void savePresenceAndAbsence(Student student , Long internshipId, PresenceAndAbsence presenceAndAbsence) {

@@ -33,6 +33,8 @@ public abstract class User extends BaseEntity implements UserDetail {
 
     private String phoneNumber;
 
+    private String code;
+
     @Override
     public String getUsername() {
         return email;

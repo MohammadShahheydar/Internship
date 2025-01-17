@@ -23,4 +23,8 @@ public class WeeklyReportDto extends BaseDto {
     Boolean supervisorConfirmation;
     @NotBlank
     String reportTitle;
+
+    String from;
+
+    String to;
 }

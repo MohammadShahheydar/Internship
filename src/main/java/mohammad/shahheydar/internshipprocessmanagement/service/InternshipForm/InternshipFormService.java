@@ -69,6 +69,7 @@ public class InternshipFormService {
             case FACULTY_TRAINING_STAFF: {
                 internshipForm.setFacultyTrainingStaff(employee);
                 Internship internship = new Internship();
+                internship.setInternshipForm(internshipForm);
                 internship.setStudent(internshipForm.getStudent());
                 internship.setGuideTeacher(internshipForm.getGuideTeacher());
                 internship.setState(InternshipState.IN_PROGRESS);
