@@ -32,7 +32,7 @@ public class WeeklyReport extends BaseEntity {
 
     private String reportTitle;
 
-    private String from;
+    private String fromDate;
 
-    private String to;
+    private String toDate;
 }

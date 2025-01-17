@@ -24,7 +24,7 @@ public class WeeklyReportDto extends BaseDto {
     @NotBlank
     String reportTitle;
 
-    String from;
+    String fromDate;
 
-    String to;
+    String toDate;
 }
