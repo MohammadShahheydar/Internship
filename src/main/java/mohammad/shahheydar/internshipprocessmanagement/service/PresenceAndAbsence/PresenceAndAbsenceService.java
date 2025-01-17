@@ -23,6 +23,8 @@ public class PresenceAndAbsenceService {
         repoPresenceAndAbsence.setTotalHour(presenceAndAbsence.getTotalHour());
         repoPresenceAndAbsence.setWeakNumber(presenceAndAbsence.getWeakNumber());
         repoPresenceAndAbsence.setWeekLog(presenceAndAbsence.getWeekLog());
+        repoPresenceAndAbsence.setFromDate(presenceAndAbsence.getFromDate());
+        repoPresenceAndAbsence.setToDate(presenceAndAbsence.getToDate());
         repoPresenceAndAbsence.setSupervisorConfirmation(null);
         repoPresenceAndAbsence.setGuideTeacherConfirmation(null);
         save(repoPresenceAndAbsence);

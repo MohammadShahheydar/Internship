@@ -23,6 +23,8 @@ public class WeeklyReportService {
         repoWeeklyReport.setReportTitle(weeklyReport.getReportTitle());
         repoWeeklyReport.setReportText(weeklyReport.getReportText());
         repoWeeklyReport.setWeakNumber(weeklyReport.getWeakNumber());
+        repoWeeklyReport.setFromDate(weeklyReport.getFromDate());
+        repoWeeklyReport.setToDate(weeklyReport.getToDate());
         repoWeeklyReport.setSupervisorConfirmation(null);
         repoWeeklyReport.setGuideTeacherConfirmation(null);
         save(repoWeeklyReport);
