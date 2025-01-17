@@ -71,7 +71,7 @@ public class InternshipController {
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
 
-    @PutMapping(value = "student/internship/{id}/weekly-report/{reportId}/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @PutMapping(value = "student/internship/{id}/weekly-report/{reportId}/update")
     public ResponseEntity<String> updateWeeklyReport(
             @PathVariable Long id,
             @PathVariable Long reportId,
