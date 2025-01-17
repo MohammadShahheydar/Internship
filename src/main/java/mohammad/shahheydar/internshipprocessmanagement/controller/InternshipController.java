@@ -56,7 +56,7 @@ public class InternshipController {
                 internshipService.findDtoBySupervisor(UserExtractor.getEmployee(request)));
     }
 
-    @PostMapping(value = "student/internship/{id}/weekly-report", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @PostMapping(value = "student/internship/{id}/weekly-report")
     public ResponseEntity<String> addWeeklyReport(
             @PathVariable Long id,
             @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
