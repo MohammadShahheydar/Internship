@@ -20,8 +20,8 @@ public class WeeklyReportDto extends BaseDto {
     String reportAttachment;
     @NotBlank
     String reportText;
-    Boolean supervisorConfirmation;
-    Boolean guideTeacherConfirmation;
+    OpinionDto supervisorConfirmation;
+    OpinionDto guideTeacherConfirmation;
     @NotBlank
     String reportTitle;
 
