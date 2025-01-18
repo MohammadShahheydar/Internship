@@ -26,7 +26,6 @@ public class OpinionMapper {
 
         OpinionDto.OpinionDtoBuilder opinionDto = OpinionDto.builder();
 
-        opinionDto.seen(opinion.getSeen());
         opinionDto.confirm(opinion.getConfirm());
         opinionDto.comment(opinion.getComment());
         opinionDto.commentDate(opinion.getCommentDate());
@@ -45,7 +44,6 @@ public class OpinionMapper {
 
         Opinion opinion = new Opinion();
 
-        opinion.setSeen(dto.getSeen());
         opinion.setConfirm(dto.getConfirm());
         opinion.setComment(dto.getComment());
         opinion.setCommentDate(dto.getCommentDate());

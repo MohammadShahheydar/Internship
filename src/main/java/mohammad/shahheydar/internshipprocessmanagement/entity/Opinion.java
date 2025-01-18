@@ -18,8 +18,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 public class Opinion extends BaseEntity {
-    private Date seen;
-
     private Boolean confirm;
 
     private String comment;

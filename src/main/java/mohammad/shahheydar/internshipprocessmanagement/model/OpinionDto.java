@@ -18,7 +18,6 @@ import java.util.Date;
 @Builder
 @Data
 public final class OpinionDto {
-    private Date seen;
     @NotNull
     private Boolean confirm;
     @NotBlank
