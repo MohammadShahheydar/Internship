@@ -28,5 +28,5 @@ public class InternshipDto extends BaseDto{
     EmployeeDto guideTeacher;
     InternshipFormDto internshipForm;
     List<WeeklyReportDto> weeklyReports;
-    List<PresenceAndAbsence> presenceAndAbsences;
+    List<PresenceAndAbsenceDto> presenceAndAbsences;
 }

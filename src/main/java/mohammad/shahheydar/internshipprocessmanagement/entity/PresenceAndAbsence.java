@@ -15,7 +15,6 @@ import lombok.Setter;
 @Entity
 public class PresenceAndAbsence extends BaseEntity implements OpinionTarget{
 
-    @NotNull
     private short weakNumber;
 
     @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL} , orphanRemoval = true)
@@ -24,10 +23,8 @@ public class PresenceAndAbsence extends BaseEntity implements OpinionTarget{
     @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL} , orphanRemoval = true)
     private Opinion guideTeacherConfirmation;
 
-    @NotBlank
     private String weekLog;
 
-    @NotNull
     private short totalHour;
 
     private String fromDate;
