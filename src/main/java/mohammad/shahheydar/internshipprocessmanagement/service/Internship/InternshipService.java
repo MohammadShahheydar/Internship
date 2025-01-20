@@ -5,6 +5,7 @@ import mohammad.shahheydar.internshipprocessmanagement.entity.*;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.WeeklyReportMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.PresenceAndAbsence.PresenceAndAbsenceService;
@@ -54,75 +55,75 @@ public class InternshipService {
         return internshipMapper.toDtoList(internshipRepository.findByGuideTeacher(guideTeacher));
     }
 
-    public void saveWeeklyReport(Student student , Long internshipId, WeeklyReportDto weeklyReport) {
-        if (!studentHasPermission(student , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
+    public void saveWeeklyReport(Student student, Long internshipId, WeeklyReportDto weeklyReport) {
+        if (!studentHasPermission(student, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
         Internship internship = findById(internshipId);
         WeeklyReport savedWeeklyReport = weeklyReportService.save(weeklyReportMapper.toEntity(weeklyReport));
         internship.addWeeklyReport(savedWeeklyReport);
         internshipRepository.save(internship);
     }
 
-    public void updateWeeklyReport(Student student , Long internshipId, WeeklyReportDto weeklyReport , Long reportId) {
-        if (!studentHasPermission(student , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
-        weeklyReportService.update(weeklyReportMapper.toEntity(weeklyReport) , reportId);
+    public void updateWeeklyReport(Student student, Long internshipId, WeeklyReportDto weeklyReport, Long reportId) {
+        if (!studentHasPermission(student, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
+        weeklyReportService.update(weeklyReportMapper.toEntity(weeklyReport), reportId);
     }
 
-    public void savePresenceAndAbsence(Student student , Long internshipId, PresenceAndAbsence presenceAndAbsence) {
-        if (!studentHasPermission(student , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
+    public void savePresenceAndAbsence(Student student, Long internshipId, PresenceAndAbsence presenceAndAbsence) {
+        if (!studentHasPermission(student, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
         Internship internship = findById(internshipId);
         PresenceAndAbsence savedPresenceAndAbsence = presenceAndAbsenceService.save(presenceAndAbsence);
         internship.addPresenceAndAbsences(savedPresenceAndAbsence);
         internshipRepository.save(internship);
     }
 
-    public void updatePresenceAndAbsence(Student student , Long internshipId, PresenceAndAbsence presenceAndAbsence , Long reportId) {
-        if (!studentHasPermission(student , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "student access denied");
-        presenceAndAbsenceService.update(presenceAndAbsence , reportId);
+    public void updatePresenceAndAbsence(Student student, Long internshipId, PresenceAndAbsence presenceAndAbsence, Long reportId) {
+        if (!studentHasPermission(student, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
+        presenceAndAbsenceService.update(presenceAndAbsence, reportId);
     }
 
-    public void supervisorConfirmWeeklyReport(Employee supervisor, Long internshipId, Long reportId , Boolean confirm) {
-        if (!supervisorHasPermission(supervisor , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
+    public void supervisorConfirmWeeklyReport(Employee supervisor, Long internshipId, Long reportId, OpinionDto confirm) {
+        if (!supervisorHasPermission(supervisor, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "supervisor access denied");
 
-        weeklyReportService.supervisorConfirm(reportId , confirm);
+        weeklyReportService.supervisorConfirm(reportId, supervisor, confirm);
     }
 
-    public void supervisorConfirmPresenceAndAbsence(Employee supervisor, Long internshipId, Long reportId , Boolean confirm) {
-        if (!supervisorHasPermission(supervisor , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "supervisor access denied");
+    public void supervisorConfirmPresenceAndAbsence(Employee supervisor, Long internshipId, Long reportId, OpinionDto confirm) {
+        if (!supervisorHasPermission(supervisor, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "supervisor access denied");
 
-        presenceAndAbsenceService.supervisorConfirm(reportId , confirm);
+        presenceAndAbsenceService.supervisorConfirm(reportId, supervisor ,  confirm);
     }
 
-    public void guideTeacherConfirmWeeklyReport(Employee guideTeacher, Long internshipId, Long reportId , Boolean confirm) {
-        if (!guideTeacherHasPermission(guideTeacher , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "guideTeacher access denied");
+    public void guideTeacherConfirmWeeklyReport(Employee guideTeacher, Long internshipId, Long reportId, OpinionDto confirm) {
+        if (!guideTeacherHasPermission(guideTeacher, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "guideTeacher access denied");
 
-        weeklyReportService.guideTeacherConfirm(reportId , confirm);
+        weeklyReportService.guideTeacherConfirm(reportId, guideTeacher, confirm);
     }
 
-    public void guideTeacherConfirmPresenceAndAbsence(Employee guideTeacher, Long internshipId, Long reportId , Boolean confirm) {
-        if (!guideTeacherHasPermission(guideTeacher , internshipId))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN , "guideTeacher access denied");
+    public void guideTeacherConfirmPresenceAndAbsence(Employee guideTeacher, Long internshipId, Long reportId, OpinionDto confirm) {
+        if (!guideTeacherHasPermission(guideTeacher, internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "guideTeacher access denied");
 
-        presenceAndAbsenceService.guideTeacherConfirm(reportId , confirm);
+        presenceAndAbsenceService.guideTeacherConfirm(reportId, guideTeacher , confirm);
     }
 
-    private boolean supervisorHasPermission(Employee supervisor , Long internshipId) {
+    private boolean supervisorHasPermission(Employee supervisor, Long internshipId) {
         Internship internship = findById(internshipId);
         return internship.getSupervisor().equals(supervisor);
     }
 
-    private boolean studentHasPermission(Student student , Long internshipId) {
+    private boolean studentHasPermission(Student student, Long internshipId) {
         Internship internship = findById(internshipId);
         return internship.getStudent().equals(student);
     }
 
-    private boolean guideTeacherHasPermission(Employee guideTeacher , Long internshipId) {
+    private boolean guideTeacherHasPermission(Employee guideTeacher, Long internshipId) {
         Internship internship = findById(internshipId);
         return internship.getGuideTeacher().equals(guideTeacher);
     }

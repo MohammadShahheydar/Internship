@@ -1,9 +1,6 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class WeeklyReport extends BaseEntity {
+public class WeeklyReport extends BaseEntity implements OpinionTarget{
 
     private short weakNumber;
 
@@ -26,9 +23,11 @@ public class WeeklyReport extends BaseEntity {
 
     private String reportText;
 
-    private Boolean supervisorConfirmation;
+    @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL} , orphanRemoval = true)
+    private Opinion supervisorConfirmation;
 
-    private Boolean guideTeacherConfirmation;
+    @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL} , orphanRemoval = true)
+    private Opinion guideTeacherConfirmation;
 
     private String reportTitle;
 

@@ -1,8 +1,13 @@
 package mohammad.shahheydar.internshipprocessmanagement.service.weeklyReport;
 
 import lombok.RequiredArgsConstructor;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Employee;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Opinion;
 import mohammad.shahheydar.internshipprocessmanagement.entity.WeeklyReport;
+import mohammad.shahheydar.internshipprocessmanagement.mapper.OpinionMapper;
+import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.WeeklyReportRepository;
+import mohammad.shahheydar.internshipprocessmanagement.service.Opinion.OpinionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class WeeklyReportService {
 
     private final WeeklyReportRepository weeklyReportRepository;
+    private final OpinionMapper opinionMapper;
 
     public WeeklyReport save(WeeklyReport weeklyReport) {
         return weeklyReportRepository.save(weeklyReport);
@@ -44,15 +50,21 @@ public class WeeklyReportService {
         return weeklyReport;
     }
 
-    public void supervisorConfirm(Long id , Boolean confirm) {
+    public void supervisorConfirm(Long id , Employee supervisor , OpinionDto confirm) {
         WeeklyReport weeklyReport = findById(id);
-        weeklyReport.setSupervisorConfirmation(confirm);
+        Opinion opinion = opinionMapper.toEntity(confirm);
+        opinion.setUser(supervisor);
+        opinion.setOpinionTarget(weeklyReport);
+        weeklyReport.setSupervisorConfirmation(opinion);
         save(weeklyReport);
     }
 
-    public void guideTeacherConfirm(Long id , Boolean confirm) {
+    public void guideTeacherConfirm(Long id , Employee guideTeacher , OpinionDto confirm) {
         WeeklyReport weeklyReport = findById(id);
-        weeklyReport.setGuideTeacherConfirmation(confirm);
+        Opinion opinion = opinionMapper.toEntity(confirm);
+        opinion.setUser(guideTeacher);
+        opinion.setOpinionTarget(weeklyReport);
+        weeklyReport.setGuideTeacherConfirmation(opinion);
         save(weeklyReport);
     }
 }

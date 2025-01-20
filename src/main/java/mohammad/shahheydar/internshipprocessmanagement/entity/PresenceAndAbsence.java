@@ -1,7 +1,6 @@
 package mohammad.shahheydar.internshipprocessmanagement.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,14 +13,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class PresenceAndAbsence extends BaseEntity {
+public class PresenceAndAbsence extends BaseEntity implements OpinionTarget{
 
     @NotNull
     private short weakNumber;
 
-    private Boolean supervisorConfirmation;
+    @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL} , orphanRemoval = true)
+    private Opinion supervisorConfirmation;
 
-    private Boolean guideTeacherConfirmation;
+    @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL} , orphanRemoval = true)
+    private Opinion guideTeacherConfirmation;
 
     @NotBlank
     private String weekLog;

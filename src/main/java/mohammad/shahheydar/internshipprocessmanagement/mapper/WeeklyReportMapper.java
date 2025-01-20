@@ -4,7 +4,7 @@ import mohammad.shahheydar.internshipprocessmanagement.entity.WeeklyReport;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import org.mapstruct.*;
 
-@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS, componentModel = MappingConstants.ComponentModel.SPRING , uses = {OpinionMapper.class})
 public interface WeeklyReportMapper extends BaseMapper<WeeklyReport , WeeklyReportDto> {
 
     @Mapping(target = "reportAttachment", source = "reportAttachment", qualifiedByName = "mapReportAttachment")

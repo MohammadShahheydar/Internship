@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.PresenceAndAbsence;
 import mohammad.shahheydar.internshipprocessmanagement.entity.WeeklyReport;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.service.Internship.InternshipService;
 import mohammad.shahheydar.internshipprocessmanagement.service.file.FileService;
@@ -60,14 +61,8 @@ public class InternshipController {
     public ResponseEntity<String> addWeeklyReport(
             @PathVariable Long id,
             @RequestBody @Valid WeeklyReportDto weeklyReport,
-//            @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
-//            @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
-//            @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
-//            @RequestPart(value = "reportAttachment", required = false) MultipartFile reportAttachment,
             HttpServletRequest request
-    ) throws IOException {
-//        String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
-//        WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
+    ) {
         internshipService.saveWeeklyReport(UserExtractor.getStudent(request), id, weeklyReport);
         return ResponseEntity.status(HttpStatus.CREATED).body("report created");
     }
@@ -77,14 +72,8 @@ public class InternshipController {
             @PathVariable Long id,
             @PathVariable Long reportId,
             @RequestBody @Valid WeeklyReportDto weeklyReport,
-//            @RequestParam(value = "weakNumber") @Valid @NotNull @Min(1) short weakNumber,
-//            @RequestPart(value = "reportText") @Valid @NotBlank String reportText,
-//            @RequestPart(value = "reportTitle") @Valid @NotBlank String reportTitle,
-//            @RequestPart(value = "reportAttachment", required = false) MultipartFile reportAttachment,
             HttpServletRequest request
-    ) throws IOException {
-//        String reportAttachmentPath = fileService.saveFile(reportAttachment, "reportAttachment");
-//        WeeklyReport weeklyReport = weeklyReportService.buildWeeklyReport(weakNumber, reportText, reportTitle, reportAttachmentPath);
+    ) {
         internshipService.updateWeeklyReport(UserExtractor.getStudent(request), id, weeklyReport, reportId);
         return ResponseEntity.status(HttpStatus.OK).body("report updated");
     }
@@ -102,25 +91,25 @@ public class InternshipController {
     }
 
     @PostMapping("supervisor/internship/{id}/confirm-weekly-report/{reportId}")
-    public ResponseEntity<String> supervisorConfirmWeeklyReport(@PathVariable Long id, @PathVariable Long reportId, @RequestParam(value = "confirm" , required = true) Boolean confirm, HttpServletRequest request) {
+    public ResponseEntity<String> supervisorConfirmWeeklyReport(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid OpinionDto confirm, HttpServletRequest request) {
         internshipService.supervisorConfirmWeeklyReport(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("supervisor/internship/{id}/confirm-presence-and-absence-report/{reportId}")
-    public ResponseEntity<String> supervisorConfirmPresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestParam(value = "confirm" , required = true) Boolean confirm, HttpServletRequest request) {
+    public ResponseEntity<String> supervisorConfirmPresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid OpinionDto confirm, HttpServletRequest request) {
         internshipService.supervisorConfirmPresenceAndAbsence(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("guideTeacher/internship/{id}/confirm-weekly-report/{reportId}")
-    public ResponseEntity<String> guideTeacherConfirmWeeklyReport(@PathVariable Long id, @PathVariable Long reportId, @RequestParam(value = "confirm" , required = true) Boolean confirm, HttpServletRequest request) {
+    public ResponseEntity<String> guideTeacherConfirmWeeklyReport(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid OpinionDto confirm, HttpServletRequest request) {
         internshipService.guideTeacherConfirmWeeklyReport(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
 
     @PostMapping("guideTeacher/internship/{id}/confirm-presence-and-absence-report/{reportId}")
-    public ResponseEntity<String> guideTeacherConfirmPresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestParam(value = "confirm" , required = true) Boolean confirm, HttpServletRequest request) {
+    public ResponseEntity<String> guideTeacherConfirmPresenceAndAbsence(@PathVariable Long id, @PathVariable Long reportId, @RequestBody @Valid OpinionDto confirm, HttpServletRequest request) {
         internshipService.guideTeacherConfirmPresenceAndAbsence(UserExtractor.getEmployee(request), id, reportId, confirm);
         return ResponseEntity.status(HttpStatus.CREATED).body("confirmed");
     }
