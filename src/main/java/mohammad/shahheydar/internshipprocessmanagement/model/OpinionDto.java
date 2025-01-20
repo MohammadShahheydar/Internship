@@ -25,5 +25,5 @@ public final class OpinionDto {
     private String comment;
     private Date commentDate;
     private OpinionerDto user;
-    private OpinionTargetDto opinionTarget;
+//    private OpinionTargetDto opinionTarget;
 }
