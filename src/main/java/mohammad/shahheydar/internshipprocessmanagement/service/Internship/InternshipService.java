@@ -3,17 +3,24 @@ package mohammad.shahheydar.internshipprocessmanagement.service.Internship;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.*;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.InternshipMapper;
+import mohammad.shahheydar.internshipprocessmanagement.mapper.OpinionMapper;
 import mohammad.shahheydar.internshipprocessmanagement.mapper.WeeklyReportMapper;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipState;
 import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipRepository;
+import mohammad.shahheydar.internshipprocessmanagement.service.Opinion.OpinionService;
 import mohammad.shahheydar.internshipprocessmanagement.service.PresenceAndAbsence.PresenceAndAbsenceService;
+import mohammad.shahheydar.internshipprocessmanagement.service.file.FileService;
 import mohammad.shahheydar.internshipprocessmanagement.service.weeklyReport.WeeklyReportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +33,9 @@ public class InternshipService {
     private final WeeklyReportService weeklyReportService;
     private final PresenceAndAbsenceService presenceAndAbsenceService;
     private final WeeklyReportMapper weeklyReportMapper;
+    private final FileService fileService;
+    private final OpinionService opinionService;
+    private final OpinionMapper opinionMapper;
 
     public Internship findById(Long id) {
         return internshipRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "internship not found"));
@@ -39,8 +49,8 @@ public class InternshipService {
         internshipRepository.save(internship);
     }
 
-    public Optional<Internship> findByStudent(Student student) {
-        return internshipRepository.findByStudent(student);
+    public Internship findByStudent(Student student) {
+        return internshipRepository.findByStudent(student).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST , "internship not found"));
     }
 
     public Optional<InternshipDto> findDtoByStudent(Student student) {
@@ -51,8 +61,22 @@ public class InternshipService {
         return internshipMapper.toDtoList(internshipRepository.findBySupervisor(supervisor));
     }
 
-    public List<InternshipDto> findDtoByGuideTeacher(Employee guideTeacher) {
-        return internshipMapper.toDtoList(internshipRepository.findByGuideTeacher(guideTeacher));
+    public List<InternshipDto> findDtoByGuideTeacher(Employee guideTeacher , InternshipState state) {
+        return internshipMapper.toDtoList(internshipRepository.findByGuideTeacherAndState(guideTeacher , state));
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void guideTeacherConfirm(OpinionDto opinionDto , Employee guideTeacher , Long internshipId) {
+        Internship internship = findById(internshipId);
+        Opinion opinion = opinionMapper.toEntity(opinionDto);
+        opinion.setOpinionTarget(internship);
+        opinion.setUser(guideTeacher);
+        opinionService.save(opinion);
+        if (opinion.getConfirm())
+            internship.setState(InternshipState.COMPLETE);
+        else
+            internship.setState(InternshipState.IN_PROGRESS);
+        save(internship);
     }
 
     public void saveWeeklyReport(Student student, Long internshipId, WeeklyReportDto weeklyReport) {
@@ -111,6 +135,21 @@ public class InternshipService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "guideTeacher access denied");
 
         presenceAndAbsenceService.guideTeacherConfirm(reportId, guideTeacher , confirm);
+    }
+
+    public void studentAskForInspect(Long internshipId , Student student) {
+        if (!studentHasPermission(student , internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
+        Internship internship = findById(internshipId);
+        internship.setState(InternshipState.PENDING);
+        save(internship);
+    }
+
+    public void studentUploadFinalReport(Student student, MultipartFile report) throws IOException {
+        Internship internship = findByStudent(student);
+        String studentFinalReport = fileService.saveFile(report , "studentFinalReport");
+        internship.setStudentFinalReport(studentFinalReport);
+        save(internship);
     }
 
     private boolean supervisorHasPermission(Employee supervisor, Long internshipId) {

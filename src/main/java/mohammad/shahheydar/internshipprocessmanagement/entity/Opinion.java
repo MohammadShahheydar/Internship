@@ -37,6 +37,7 @@ public class Opinion extends BaseEntity {
     @AnyDiscriminatorValue(discriminator = "internshipForm", entity = InternshipForm.class)
     @AnyDiscriminatorValue(discriminator = "weeklyReport", entity = WeeklyReport.class)
     @AnyDiscriminatorValue(discriminator = "presenceAndAbsence", entity = PresenceAndAbsence.class)
+    @AnyDiscriminatorValue(discriminator = "internship", entity = Internship.class)
     @AnyKeyJavaClass(Long.class)
     @Column(name = "opinion_target_type")
     @JoinColumn(name = "opinion_target_id")

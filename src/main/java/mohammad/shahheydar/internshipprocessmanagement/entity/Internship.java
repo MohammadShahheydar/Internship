@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Internship extends BaseEntity {
+public class Internship extends BaseEntity implements OpinionTarget {
 
     @OneToMany()
     @JoinColumn(name = "internship_id")
@@ -24,6 +24,9 @@ public class Internship extends BaseEntity {
     @OneToMany()
     @JoinColumn(name = "internship_id")
     List<PresenceAndAbsence> presenceAndAbsences;
+
+    @OneToMany(mappedBy = "opinionTarget", fetch = FetchType.EAGER)
+    private List<Opinion> opinions;
 
     private String studentFinalReport;
 

@@ -2,13 +2,11 @@ package mohammad.shahheydar.internshipprocessmanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.PresenceAndAbsence;
-import mohammad.shahheydar.internshipprocessmanagement.entity.WeeklyReport;
+import mohammad.shahheydar.internshipprocessmanagement.entity.User;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
+import mohammad.shahheydar.internshipprocessmanagement.model.InternshipState;
 import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.service.Internship.InternshipService;
@@ -30,8 +28,6 @@ import java.util.List;
 public class InternshipController {
 
     private final InternshipService internshipService;
-    private final WeeklyReportService weeklyReportService;
-    private final FileService fileService;
 
     @GetMapping("student/internship")
     public ResponseEntity<InternshipDto> getStudentInternship(HttpServletRequest request) {
@@ -39,16 +35,33 @@ public class InternshipController {
                 internshipService.findDtoByStudent(UserExtractor.getStudent(request))
                         .orElseThrow(
                                 () -> new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
-                                        "student doesn't have any internship"
+                                        HttpStatus.NOT_FOUND, "student doesn't have any internship"
                                 )
                         ));
     }
 
+    @PostMapping("student/internship/{id}/ask-for-inspect")
+    public ResponseEntity<String> askForInspect(@PathVariable Long id, HttpServletRequest request) {
+        internshipService.studentAskForInspect(id, UserExtractor.getStudent(request));
+        return ResponseEntity.ok("send to guide teacher");
+    }
+
+    @PostMapping(value = "student/upload-final-report", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    public ResponseEntity<String> uploadFinalReport(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        internshipService.studentUploadFinalReport(UserExtractor.getStudent(request) , file);
+        return ResponseEntity.status(HttpStatus.CREATED).body("report uploaded successfully");
+    }
+
     @GetMapping("guideTeacher/internship")
-    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(HttpServletRequest request) {
+    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(@RequestParam("state")InternshipState state, HttpServletRequest request) {
         return ResponseEntity.ok(
-                internshipService.findDtoByGuideTeacher(UserExtractor.getEmployee(request)));
+                internshipService.findDtoByGuideTeacher(UserExtractor.getEmployee(request) , state));
+    }
+
+    @PostMapping("guideTeacher/internship/{id}/confirm")
+    public ResponseEntity<String> guideTeacherConfirm(@PathVariable Long id, @RequestBody @Valid OpinionDto opinionDto , HttpServletRequest request) {
+        internshipService.guideTeacherConfirm(opinionDto , UserExtractor.getEmployee(request) , id);
+        return ResponseEntity.status(HttpStatus.CREATED).body("opinion saved successfully");
     }
 
     @GetMapping("supervisor/internship")

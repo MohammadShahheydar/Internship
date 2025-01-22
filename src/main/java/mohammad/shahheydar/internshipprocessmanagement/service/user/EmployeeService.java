@@ -76,7 +76,7 @@ public class EmployeeService {
         internshipFormService.update(internshipForm);
         Student student = internshipForm.getStudent();
         Employee supervisor = register(employeeDto);
-        Internship internship = internshipService.findByStudent(student).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST , "student not found"));
+        Internship internship = internshipService.findByStudent(student);
         internship.setSupervisor(supervisor);
         internshipService.update(internship);
         return supervisor;

@@ -1,6 +1,7 @@
 package mohammad.shahheydar.internshipprocessmanagement.model;
 
 import lombok.*;
+import mohammad.shahheydar.internshipprocessmanagement.entity.Opinion;
 import mohammad.shahheydar.internshipprocessmanagement.entity.PresenceAndAbsence;
 import mohammad.shahheydar.internshipprocessmanagement.entity.WeeklyReport;
 
@@ -29,4 +30,5 @@ public class InternshipDto extends BaseDto{
     InternshipFormDto internshipForm;
     List<WeeklyReportDto> weeklyReports;
     List<PresenceAndAbsenceDto> presenceAndAbsences;
+    List<OpinionDto> opinions;
 }
