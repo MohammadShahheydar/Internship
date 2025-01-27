@@ -47,13 +47,13 @@ public class InternshipController {
     }
 
     @PostMapping(value = "student/upload-final-report", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
-    public ResponseEntity<String> uploadFinalReport(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+    public ResponseEntity<String> uploadFinalReport(@RequestPart("file") MultipartFile file, HttpServletRequest request) throws IOException {
         internshipService.studentUploadFinalReport(UserExtractor.getStudent(request) , file);
         return ResponseEntity.status(HttpStatus.CREATED).body("report uploaded successfully");
     }
 
     @GetMapping("guideTeacher/internship")
-    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(@RequestParam("state")InternshipState state, HttpServletRequest request) {
+    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(@RequestParam(value = "state" , required = true)InternshipState state, HttpServletRequest request) {
         return ResponseEntity.ok(
                 internshipService.findDtoByGuideTeacher(UserExtractor.getEmployee(request) , state));
     }
