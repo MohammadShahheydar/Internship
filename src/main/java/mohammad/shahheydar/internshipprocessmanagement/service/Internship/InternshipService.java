@@ -10,6 +10,7 @@ import mohammad.shahheydar.internshipprocessmanagement.model.InternshipState;
 import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.repository.InternshipRepository;
+import mohammad.shahheydar.internshipprocessmanagement.repository.OpinionRepository;
 import mohammad.shahheydar.internshipprocessmanagement.service.Opinion.OpinionService;
 import mohammad.shahheydar.internshipprocessmanagement.service.PresenceAndAbsence.PresenceAndAbsenceService;
 import mohammad.shahheydar.internshipprocessmanagement.service.file.FileService;
@@ -34,7 +35,7 @@ public class InternshipService {
     private final PresenceAndAbsenceService presenceAndAbsenceService;
     private final WeeklyReportMapper weeklyReportMapper;
     private final FileService fileService;
-    private final OpinionService opinionService;
+    private final OpinionRepository opinionRepository;
     private final OpinionMapper opinionMapper;
 
     public Internship findById(Long id) {
@@ -73,7 +74,7 @@ public class InternshipService {
         Opinion opinion = opinionMapper.toEntity(opinionDto);
         opinion.setOpinionTarget(internship);
         opinion.setUser(guideTeacher);
-        opinionService.save(opinion);
+        opinionRepository.save(opinion);
         if (opinion.getConfirm())
             internship.setState(InternshipState.COMPLETE);
         else
