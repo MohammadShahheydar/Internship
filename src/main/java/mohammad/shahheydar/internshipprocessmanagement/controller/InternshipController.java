@@ -40,9 +40,9 @@ public class InternshipController {
                         ));
     }
 
-    @PostMapping("student/internship/{id}/ask-for-inspect")
-    public ResponseEntity<String> askForInspect(@PathVariable Long id, HttpServletRequest request) {
-        internshipService.studentAskForInspect(id, UserExtractor.getStudent(request));
+    @PostMapping("student/internship//ask-for-inspect")
+    public ResponseEntity<String> askForInspect(HttpServletRequest request) {
+        internshipService.studentAskForInspect(UserExtractor.getStudent(request));
         return ResponseEntity.ok("send to guide teacher");
     }
 

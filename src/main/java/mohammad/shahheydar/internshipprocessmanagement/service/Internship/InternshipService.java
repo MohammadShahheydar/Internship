@@ -68,6 +68,8 @@ public class InternshipService {
     @Transactional(rollbackFor = Throwable.class)
     public void guideTeacherConfirm(OpinionDto opinionDto , Employee guideTeacher , Long internshipId) {
         Internship internship = findById(internshipId);
+        if (!studentHasPermission(internship.getStudent(), internshipId))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
         Opinion opinion = opinionMapper.toEntity(opinionDto);
         opinion.setOpinionTarget(internship);
         opinion.setUser(guideTeacher);
@@ -137,10 +139,10 @@ public class InternshipService {
         presenceAndAbsenceService.guideTeacherConfirm(reportId, guideTeacher , confirm);
     }
 
-    public void studentAskForInspect(Long internshipId , Student student) {
-        if (!studentHasPermission(student , internshipId))
+    public void studentAskForInspect(Student student) {
+        Internship internship = internshipRepository.findByStudent(student).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND , "student doesn't has any internship"));
+        if (!studentHasPermission(student , internship.getId()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "student access denied");
-        Internship internship = findById(internshipId);
         internship.setState(InternshipState.PENDING);
         save(internship);
     }
