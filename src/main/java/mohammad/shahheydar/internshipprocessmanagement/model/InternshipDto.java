@@ -22,7 +22,7 @@ public class InternshipDto extends BaseDto{
     String studentFinalReport;
     Timestamp studentObjectionDate;
     String studentObjectionText;
-    int internshipState;
+    InternshipState state;
     StudentDto student;
     EmployeeDto supervisor;
     String supervisorReport;
