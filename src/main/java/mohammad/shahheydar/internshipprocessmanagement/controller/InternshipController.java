@@ -4,15 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mohammad.shahheydar.internshipprocessmanagement.entity.PresenceAndAbsence;
-import mohammad.shahheydar.internshipprocessmanagement.entity.User;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.InternshipState;
 import mohammad.shahheydar.internshipprocessmanagement.model.OpinionDto;
 import mohammad.shahheydar.internshipprocessmanagement.model.WeeklyReportDto;
 import mohammad.shahheydar.internshipprocessmanagement.service.Internship.InternshipService;
-import mohammad.shahheydar.internshipprocessmanagement.service.file.FileService;
 import mohammad.shahheydar.internshipprocessmanagement.service.utils.UserExtractor;
-import mohammad.shahheydar.internshipprocessmanagement.service.weeklyReport.WeeklyReportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +37,7 @@ public class InternshipController {
                         ));
     }
 
-    @PostMapping("student/internship//ask-for-inspect")
+    @PostMapping("student/internship/ask-for-inspect")
     public ResponseEntity<String> askForInspect(HttpServletRequest request) {
         internshipService.studentAskForInspect(UserExtractor.getStudent(request));
         return ResponseEntity.ok("send to guide teacher");
@@ -48,19 +45,19 @@ public class InternshipController {
 
     @PostMapping(value = "student/upload-final-report", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public ResponseEntity<String> uploadFinalReport(@RequestPart("file") MultipartFile file, HttpServletRequest request) throws IOException {
-        internshipService.studentUploadFinalReport(UserExtractor.getStudent(request) , file);
+        internshipService.studentUploadFinalReport(UserExtractor.getStudent(request), file);
         return ResponseEntity.status(HttpStatus.CREATED).body("report uploaded successfully");
     }
 
     @GetMapping("guideTeacher/internship")
-    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(@RequestParam(value = "state" , required = true)InternshipState state, HttpServletRequest request) {
+    public ResponseEntity<List<InternshipDto>> getGuideTeacherInternship(@RequestParam(value = "state", required = true) InternshipState state, HttpServletRequest request) {
         return ResponseEntity.ok(
-                internshipService.findDtoByGuideTeacher(UserExtractor.getEmployee(request) , state));
+                internshipService.findDtoByGuideTeacher(UserExtractor.getEmployee(request), state));
     }
 
     @PostMapping("guideTeacher/internship/{id}/confirm")
-    public ResponseEntity<String> guideTeacherConfirm(@PathVariable Long id, @RequestBody @Valid OpinionDto opinionDto , HttpServletRequest request) {
-        internshipService.guideTeacherConfirm(opinionDto , UserExtractor.getEmployee(request) , id);
+    public ResponseEntity<String> guideTeacherConfirm(@PathVariable Long id, @RequestBody @Valid OpinionDto opinionDto, HttpServletRequest request) {
+        internshipService.guideTeacherConfirm(opinionDto, UserExtractor.getEmployee(request), id);
         return ResponseEntity.status(HttpStatus.CREATED).body("opinion saved successfully");
     }
 

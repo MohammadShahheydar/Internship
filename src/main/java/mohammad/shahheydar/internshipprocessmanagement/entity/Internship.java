@@ -36,7 +36,7 @@ public class Internship extends BaseEntity implements OpinionTarget {
     private String studentObjectionText;
 
     @Column(nullable = false)
-    @Enumerated
+    @Enumerated(EnumType.ORDINAL)
     private InternshipState state;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
