@@ -25,28 +25,28 @@ public class InternshipFormController {
     private final InternshipFormService internshipFormService;
 
 //    @GetMapping("all")
-//    public ResponseEntity<Page<InternshipFormListDto>> getAll(@RequestParam(required = false , defaultValue = "0") int page) {
+//    public ResponseEntity<Page<InternshipFormListDto>> getAll(@RequestParam(required = false , defaultValue = "0") int page , @RequestParam(required = false , defaultValue = "10") int pageSize) {
 //        return ResponseEntity.ok(internshipFormService.findAll(Pageable.ofSize(20).withPage(page)));
 //    }
 
     @GetMapping("student/internship-forms")
-    public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(HttpServletRequest request , @RequestParam(required = false , defaultValue = "0") int page) {
-        return ResponseEntity.ok(internshipFormService.findAllByStudentId(UserExtractor.getStudent(request).getId(), Pageable.ofSize(20).withPage(page)));
+    public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(HttpServletRequest request , @RequestParam(required = false , defaultValue = "0") int page , @RequestParam(required = false , defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(internshipFormService.findAllByStudentId(UserExtractor.getStudent(request).getId(), Pageable.ofSize(pageSize).withPage(page)));
     }
 
     @GetMapping("universityTrainingStaff/internship-forms")
-    public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(@RequestParam(required = false , defaultValue = "0") int page) {
-        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20).withPage(page), null));
+    public ResponseEntity<Page<InternshipFormListDto>> getAllUniversityTrainingStaffForm(@RequestParam(required = false , defaultValue = "0") int page , @RequestParam(required = false , defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(pageSize).withPage(page), null));
     }
 
     @GetMapping("departmentHead/internship-forms")
-    public ResponseEntity<Page<InternshipFormListDto>> getAllDepartmentHeadForm(@RequestParam(required = false , defaultValue = "0") int page) {
-        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20).withPage(page), InternshipFormProgressState.UNIVERSITY_TRAINING_STAFF));
+    public ResponseEntity<Page<InternshipFormListDto>> getAllDepartmentHeadForm(@RequestParam(required = false , defaultValue = "0") int page , @RequestParam(required = false , defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(pageSize).withPage(page), InternshipFormProgressState.UNIVERSITY_TRAINING_STAFF));
     }
 
     @GetMapping("facultyTrainingStaff/internship-forms")
-    public ResponseEntity<Page<InternshipFormListDto>> getAllFacultyTrainingStaffForm(@RequestParam(required = false , defaultValue = "0") int page) {
-        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(20).withPage(page), InternshipFormProgressState.DEPARTMENT_HEAD));
+    public ResponseEntity<Page<InternshipFormListDto>> getAllFacultyTrainingStaffForm(@RequestParam(required = false , defaultValue = "0") int page , @RequestParam(required = false , defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(internshipFormService.findAllByProgressState(Pageable.ofSize(pageSize).withPage(page), InternshipFormProgressState.DEPARTMENT_HEAD));
     }
 
     @GetMapping("internship-forms/{id}")
